@@ -4,28 +4,120 @@ const size = 17;
 const keyOf = ({ x, y }) => `${x},${y}`;
 const range = (from, to) => Array.from({ length: to - from + 1 }, (_, index) => from + index);
 const cellsFrom = (cells) => new Set(cells.map(([x, y]) => `${x},${y}`));
-const rect = (x1, y1, x2, y2) => range(y1, y2).flatMap((y) => range(x1, x2).map((x) => [x, y]));
+const points = (coords) => coords.map(([x, y]) => ({ x, y }));
+const line = (from, to) => {
+  const horizontal = Array.from({ length: Math.abs(to.x - from.x) + 1 }, (_, index) => ({
+    x: from.x + Math.sign(to.x - from.x) * index,
+    y: from.y,
+  }));
+  const corner = horizontal[horizontal.length - 1];
+  const vertical = Array.from({ length: Math.abs(to.y - from.y) }, (_, index) => ({
+    x: corner.x,
+    y: corner.y + Math.sign(to.y - from.y) * (index + 1),
+  }));
+  return [...horizontal, ...vertical];
+};
+const pathFromPoints = (coords) => {
+  const anchors = points(coords);
+  return anchors.flatMap((anchor, index) => {
+    if (index === anchors.length - 1) return [];
+    const segment = line(anchor, anchors[index + 1]);
+    return index === 0 ? segment : segment.slice(1);
+  });
+};
+const obstacleSet = (route, extras) => {
+  const routeKeys = new Set(route.map(keyOf));
+  return cellsFrom(extras.filter(([x, y]) => !routeKeys.has(`${x},${y}`)));
+};
+const obstacleText = ['BUAA CHORUS', '邓新', 'YOLO', '工位招租', 'token续租'];
+
+const iRoute = pathFromPoints([
+  [4, 2],
+  [12, 2],
+  [8, 2],
+  [8, 14],
+  [4, 14],
+  [12, 14],
+]);
+
+const heartRoute = pathFromPoints([
+  [5, 3],
+  [4, 3],
+  [3, 4],
+  [3, 5],
+  [4, 5],
+  [3, 5],
+  [4, 6],
+  [5, 6],
+  [5, 7],
+  [6, 7],
+  [6, 8],
+  [7, 8],
+  [7, 9],
+  [8, 9],
+  [8, 10],
+  [9, 10],
+  [9, 9],
+  [10, 9],
+  [10, 8],
+  [11, 8],
+  [11, 7],
+  [12, 7],
+  [12, 6],
+  [13, 6],
+  [13, 5],
+  [13, 4],
+  [12, 4],
+  [12, 3],
+  [11, 3],
+  [11, 4],
+  [10, 4],
+  [10, 5],
+  [9, 5],
+  [9, 6],
+  [8, 6],
+  [7, 5],
+  [6, 5],
+  [6, 4],
+  [5, 4],
+  [5, 3],
+]);
+
+const uRoute = pathFromPoints([
+  [4, 2],
+  [4, 12],
+  [12, 12],
+  [12, 2],
+]);
 
 const makeLevels = () => [
   {
     id: 'i',
     title: 'Level 01',
     subtitle: 'The letter I',
-    start: { x: 4, y: 3 },
-    exit: { x: 12, y: 13 },
-    cells: cellsFrom([
-      ...rect(4, 2, 12, 4),
-      ...rect(6, 2, 10, 14),
-      ...rect(4, 12, 12, 14),
-    ]),
-    obstacles: cellsFrom([
+    route: iRoute,
+    start: iRoute[0],
+    exit: iRoute[iRoute.length - 1],
+    cells: cellsFrom(iRoute.map(({ x, y }) => [x, y])),
+    obstacles: obstacleSet(iRoute, [
+      [6, 3],
       [7, 3],
+      [9, 3],
       [10, 3],
-      [8, 5],
-      [7, 7],
+      [6, 5],
+      [10, 5],
+      [7, 6],
+      [9, 6],
+      [6, 8],
+      [10, 8],
+      [7, 10],
       [9, 9],
-      [8, 11],
+      [9, 11],
+      [6, 12],
+      [10, 12],
       [6, 13],
+      [7, 13],
+      [9, 13],
       [10, 13],
     ]),
   },
@@ -33,29 +125,32 @@ const makeLevels = () => [
     id: 'heart',
     title: 'Level 02',
     subtitle: 'The soft middle',
-    start: { x: 5, y: 2 },
-    exit: { x: 8, y: 11 },
-    cells: cellsFrom([
-      ...[5, 6, 10, 11].map((x) => [x, 2]),
-      ...range(4, 7).map((x) => [x, 3]),
-      ...range(9, 12).map((x) => [x, 3]),
-      ...range(3, 13).map((x) => [x, 4]),
-      ...range(3, 13).map((x) => [x, 5]),
-      ...range(4, 12).map((x) => [x, 6]),
-      ...range(5, 11).map((x) => [x, 7]),
-      ...range(6, 10).map((x) => [x, 8]),
-      ...range(7, 9).map((x) => [x, 9]),
-      [8, 10],
-      [8, 11],
-    ]),
-    obstacles: cellsFrom([
-      [6, 4],
+    route: heartRoute,
+    start: heartRoute[0],
+    exit: heartRoute[heartRoute.length - 1],
+    cells: cellsFrom(heartRoute.map(({ x, y }) => [x, y])),
+    obstacles: obstacleSet(heartRoute, [
+      [5, 2],
+      [6, 3],
+      [7, 4],
+      [8, 4],
+      [9, 4],
       [10, 4],
       [4, 5],
+      [5, 5],
+      [6, 5],
       [8, 5],
+      [10, 5],
+      [11, 5],
       [12, 5],
       [6, 6],
+      [7, 6],
+      [9, 6],
       [10, 6],
+      [5, 8],
+      [11, 8],
+      [6, 9],
+      [10, 9],
       [8, 8],
     ]),
   },
@@ -63,21 +158,31 @@ const makeLevels = () => [
     id: 'u',
     title: 'Level 03',
     subtitle: 'The letter U',
-    start: { x: 4, y: 2 },
-    exit: { x: 12, y: 2 },
-    cells: cellsFrom([
-      ...rect(3, 2, 5, 12),
-      ...rect(11, 2, 13, 12),
-      ...rect(3, 10, 13, 12),
-    ]),
-    obstacles: cellsFrom([
+    route: uRoute,
+    start: uRoute[0],
+    exit: uRoute[uRoute.length - 1],
+    cells: cellsFrom(uRoute.map(({ x, y }) => [x, y])),
+    obstacles: obstacleSet(uRoute, [
+      [3, 3],
+      [5, 3],
       [4, 4],
+      [3, 5],
+      [5, 6],
       [3, 7],
+      [5, 8],
       [5, 10],
+      [4, 11],
+      [6, 11],
       [7, 11],
+      [8, 10],
       [9, 10],
+      [10, 11],
+      [11, 11],
       [12, 8],
+      [11, 7],
+      [13, 6],
       [11, 5],
+      [13, 4],
     ]),
   },
 ];
@@ -100,6 +205,7 @@ const directions = {
 export default function MazeGamePage({ onComplete }) {
   const levels = useMemo(makeLevels, []);
   const [levelIndex, setLevelIndex] = useState(0);
+  const [routeIndex, setRouteIndex] = useState(0);
   const [player, setPlayer] = useState(levels[0].start);
   const [trail, setTrail] = useState([levels[0].start]);
   const [finishedTrails, setFinishedTrails] = useState({});
@@ -109,8 +215,8 @@ export default function MazeGamePage({ onComplete }) {
   const level = levels[levelIndex];
   const obstacleKeys = level.obstacles;
 
-  const finishLevel = (finalTrail) => {
-    const nextTrails = { ...finishedTrails, [level.id]: finalTrail };
+  const finishLevel = () => {
+    const nextTrails = { ...finishedTrails, [level.id]: level.route };
     setFinishedTrails(nextTrails);
 
     if (levelIndex === levels.length - 1) {
@@ -122,6 +228,7 @@ export default function MazeGamePage({ onComplete }) {
     setNotice('很好，下一关。');
     const nextLevel = levels[levelIndex + 1];
     setLevelIndex((current) => current + 1);
+    setRouteIndex(0);
     setPlayer(nextLevel.start);
     setTrail([nextLevel.start]);
   };
@@ -131,18 +238,30 @@ export default function MazeGamePage({ onComplete }) {
 
     const next = { x: player.x + delta.x, y: player.y + delta.y };
     const nextKey = keyOf(next);
-    if (!level.cells.has(nextKey) || obstacleKeys.has(nextKey)) {
-      setNotice('前面是挡板，像迷宫一样绕过去。');
+    const nextRouteCell = level.route[routeIndex + 1];
+    const previousRouteCell = level.route[routeIndex - 1];
+    const isNextStep = nextRouteCell && nextRouteCell.x === next.x && nextRouteCell.y === next.y;
+    const isBackStep = previousRouteCell && previousRouteCell.x === next.x && previousRouteCell.y === next.y;
+
+    if (obstacleKeys.has(nextKey)) {
+      setNotice('赛博挡板在闪，换个方向。');
       return;
     }
 
+    if (!isNextStep && !isBackStep) {
+      setNotice('这不是正确路线，沿着唯一通道继续找出口。');
+      return;
+    }
+
+    const nextIndex = isNextStep ? routeIndex + 1 : routeIndex - 1;
     const nextTrail = [...trail, next];
+    setRouteIndex(nextIndex);
     setPlayer(next);
     setTrail(nextTrail);
     setNotice('继续走，出口在发光。');
 
-    if (next.x === level.exit.x && next.y === level.exit.y) {
-      finishLevel(nextTrail);
+    if (nextIndex === level.route.length - 1) {
+      finishLevel();
     }
   };
 
@@ -202,6 +321,8 @@ export default function MazeGamePage({ onComplete }) {
             const isPlayer = player.x === x && player.y === y;
             const isExit = level.exit.x === x && level.exit.y === y;
             const isObstacle = obstacleKeys.has(key);
+            const labelIndex = [...obstacleKeys].indexOf(key);
+            const obstacleLabel = labelIndex >= 0 ? obstacleText[labelIndex % obstacleText.length] : '';
 
             return (
               <span
@@ -215,7 +336,9 @@ export default function MazeGamePage({ onComplete }) {
                   isExit ? 'exit' : '',
                   isPlayer ? 'player' : '',
                 ].join(' ')}
-              />
+              >
+                {visible && isObstacle ? <span className="maze-obstacle-label">{obstacleLabel}</span> : null}
+              </span>
             );
           })}
         </div>
