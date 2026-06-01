@@ -730,8 +730,16 @@
     background: #5e4a66;
   }
 
+  .maze-cell.seen.obstacle {
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.11) 0 2px, transparent 2px 7px),
+      #191621;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 229, 158, .12),
+      inset 0 0 18px rgba(0, 0, 0, .34);
+  }
+
   .maze-cell.exit.seen::after,
-  .maze-cell.hazard.seen::after,
   .maze-cell.player::after {
     content: "";
     position: absolute;
@@ -742,11 +750,6 @@
   .maze-cell.exit.seen::after {
     background: #ffe59e;
     box-shadow: 0 0 18px #ffe59e;
-  }
-
-  .maze-cell.hazard.seen::after {
-    background: #ff5d7a;
-    box-shadow: 0 0 16px rgba(255, 93, 122, .86);
   }
 
   .maze-cell.player::after {
