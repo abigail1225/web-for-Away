@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.pnpm-home/
+.DS_Store
+*.log
