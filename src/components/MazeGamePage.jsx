@@ -29,7 +29,19 @@ const obstacleSet = (route, extras) => {
   const routeKeys = new Set(route.map(keyOf));
   return cellsFrom(extras.filter(([x, y]) => !routeKeys.has(`${x},${y}`)));
 };
-const obstacleText = ['BUAA CHORUS', '邓新', 'YOLO', '工位招租', 'token续租'];
+const cyberCopy = {
+  chorus: 'BUAA CHORUS',
+  dx: '邓欣帮弄',
+  szdk: 'SZDK游戏代通关',
+  phone: '咨询电话18612258636',
+  yolo: 'YOLO',
+  rent: '工位招租',
+  token: 'token续租',
+  drone: 'DRONE',
+  score: '♪ 乐谱同步',
+  laptop: 'LAPTOP',
+  chatgpt: 'Chat GPT',
+};
 
 const iRoute = pathFromPoints([
   [4, 2],
@@ -120,6 +132,13 @@ const makeLevels = () => [
       [9, 13],
       [10, 13],
     ]),
+    signs: [
+      { x: 6, y: 3, w: 2, text: cyberCopy.chorus, tone: 0 },
+      { x: 9, y: 3, w: 2, text: cyberCopy.dx, tone: 1 },
+      { x: 6, y: 8, w: 5, text: cyberCopy.szdk, tone: 2 },
+      { x: 6, y: 12, w: 5, text: cyberCopy.phone, tone: 3 },
+      { x: 7, y: 10, w: 3, text: cyberCopy.drone, tone: 4 },
+    ],
   },
   {
     id: 'heart',
@@ -153,6 +172,13 @@ const makeLevels = () => [
       [10, 9],
       [8, 8],
     ]),
+    signs: [
+      { x: 7, y: 4, w: 4, text: cyberCopy.yolo, tone: 2 },
+      { x: 4, y: 5, w: 3, text: cyberCopy.score, tone: 4 },
+      { x: 10, y: 5, w: 3, text: cyberCopy.rent, tone: 0 },
+      { x: 6, y: 6, w: 5, text: cyberCopy.chatgpt, tone: 3 },
+      { x: 6, y: 9, w: 5, text: cyberCopy.dx, tone: 1 },
+    ],
   },
   {
     id: 'u',
@@ -184,6 +210,13 @@ const makeLevels = () => [
       [11, 5],
       [13, 4],
     ]),
+    signs: [
+      { x: 3, y: 3, w: 3, text: cyberCopy.laptop, tone: 1 },
+      { x: 3, y: 7, w: 3, text: cyberCopy.token, tone: 3 },
+      { x: 5, y: 10, w: 6, text: cyberCopy.phone, tone: 0 },
+      { x: 10, y: 11, w: 4, text: cyberCopy.szdk, tone: 2 },
+      { x: 11, y: 5, w: 3, text: cyberCopy.drone, tone: 4 },
+    ],
   },
 ];
 
@@ -214,6 +247,7 @@ export default function MazeGamePage({ onComplete }) {
 
   const level = levels[levelIndex];
   const obstacleKeys = level.obstacles;
+  const obstacleList = useMemo(() => [...obstacleKeys], [obstacleKeys]);
 
   const finishLevel = () => {
     const nextTrails = { ...finishedTrails, [level.id]: level.route };
@@ -321,8 +355,7 @@ export default function MazeGamePage({ onComplete }) {
             const isPlayer = player.x === x && player.y === y;
             const isExit = level.exit.x === x && level.exit.y === y;
             const isObstacle = obstacleKeys.has(key);
-            const labelIndex = [...obstacleKeys].indexOf(key);
-            const obstacleLabel = labelIndex >= 0 ? obstacleText[labelIndex % obstacleText.length] : '';
+            const obstacleIndex = obstacleList.indexOf(key);
 
             return (
               <span
@@ -332,12 +365,26 @@ export default function MazeGamePage({ onComplete }) {
                   visible ? 'seen' : 'unseen',
                   isPath ? 'path' : 'wall',
                   isObstacle ? 'obstacle' : '',
+                  isObstacle ? `cyber-tone-${obstacleIndex % 5}` : '',
                   isTrail ? 'trail' : '',
                   isExit ? 'exit' : '',
                   isPlayer ? 'player' : '',
                 ].join(' ')}
+              />
+            );
+          })}
+          {level.signs.map((sign) => {
+            const visible = Math.hypot(player.x - (sign.x + sign.w / 2), player.y - sign.y) <= 5.15;
+            return (
+              <span
+                key={`${sign.text}-${sign.x}-${sign.y}`}
+                className={`maze-obstacle-sign cyber-tone-${sign.tone} ${visible ? 'seen' : 'unseen'}`}
+                style={{
+                  gridColumn: `${sign.x + 1} / span ${sign.w}`,
+                  gridRow: `${sign.y + 1} / span 1`,
+                }}
               >
-                {visible && isObstacle ? <span className="maze-obstacle-label">{obstacleLabel}</span> : null}
+                {sign.text}
               </span>
             );
           })}
