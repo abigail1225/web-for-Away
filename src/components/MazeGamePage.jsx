@@ -242,12 +242,21 @@ export default function MazeGamePage({ onComplete }) {
   const [player, setPlayer] = useState(levels[0].start);
   const [trail, setTrail] = useState([levels[0].start]);
   const [finishedTrails, setFinishedTrails] = useState({});
-  const [notice, setNotice] = useState('用方向键或 WASD 移动，绕开地形里的挡板。');
+  const [notice, setNotice] = useState('跟着蓝色发光格子走。粉色是你走过的路，黄色是出口。');
   const [mode, setMode] = useState('playing');
 
   const level = levels[levelIndex];
   const obstacleKeys = level.obstacles;
   const obstacleList = useMemo(() => [...obstacleKeys], [obstacleKeys]);
+  const nextRouteCell = level.route[routeIndex + 1];
+  const nextDirection = nextRouteCell
+    ? {
+        '1,0': '→',
+        '-1,0': '←',
+        '0,1': '↓',
+        '0,-1': '↑',
+      }[`${nextRouteCell.x - player.x},${nextRouteCell.y - player.y}`]
+    : '出口';
 
   const finishLevel = () => {
     const nextTrails = { ...finishedTrails, [level.id]: level.route };
@@ -272,18 +281,17 @@ export default function MazeGamePage({ onComplete }) {
 
     const next = { x: player.x + delta.x, y: player.y + delta.y };
     const nextKey = keyOf(next);
-    const nextRouteCell = level.route[routeIndex + 1];
     const previousRouteCell = level.route[routeIndex - 1];
     const isNextStep = nextRouteCell && nextRouteCell.x === next.x && nextRouteCell.y === next.y;
     const isBackStep = previousRouteCell && previousRouteCell.x === next.x && previousRouteCell.y === next.y;
 
     if (obstacleKeys.has(nextKey)) {
-      setNotice('赛博挡板在闪，换个方向。');
+      setNotice('这是霓虹挡板。别撞它，跟着蓝色发光格子走。');
       return;
     }
 
     if (!isNextStep && !isBackStep) {
-      setNotice('这不是正确路线，沿着唯一通道继续找出口。');
+      setNotice('走偏啦。看蓝色发光格子，那就是下一步。');
       return;
     }
 
@@ -292,7 +300,7 @@ export default function MazeGamePage({ onComplete }) {
     setRouteIndex(nextIndex);
     setPlayer(next);
     setTrail(nextTrail);
-    setNotice('继续走，出口在发光。');
+    setNotice('很好，继续跟着蓝色发光格子走。');
 
     if (nextIndex === level.route.length - 1) {
       finishLevel();
@@ -349,7 +357,10 @@ export default function MazeGamePage({ onComplete }) {
             const y = Math.floor(index / size);
             const key = `${x},${y}`;
             const distance = Math.hypot(player.x - x, player.y - y);
-            const visible = distance <= 4.15;
+            const routePosition = level.route.findIndex((cell) => cell.x === x && cell.y === y);
+            const isGuide = routePosition > routeIndex && routePosition <= routeIndex + 5;
+            const isNextGuide = routePosition === routeIndex + 1;
+            const visible = distance <= 5.35 || isGuide;
             const isPath = level.cells.has(key);
             const isTrail = trail.some((cell) => cell.x === x && cell.y === y);
             const isPlayer = player.x === x && player.y === y;
@@ -366,6 +377,8 @@ export default function MazeGamePage({ onComplete }) {
                   isPath ? 'path' : 'wall',
                   isObstacle ? 'obstacle' : '',
                   isObstacle ? `cyber-tone-${obstacleIndex % 5}` : '',
+                  isGuide ? 'guide' : '',
+                  isNextGuide ? 'next-guide' : '',
                   isTrail ? 'trail' : '',
                   isExit ? 'exit' : '',
                   isPlayer ? 'player' : '',
@@ -392,6 +405,16 @@ export default function MazeGamePage({ onComplete }) {
 
         <aside className="maze-panel">
           <p>{notice}</p>
+          <div className="maze-next-hint">
+            <span>下一步</span>
+            <strong>{nextDirection}</strong>
+          </div>
+          <div className="maze-legend" aria-label="图例">
+            <span><i className="legend-next" />下一步</span>
+            <span><i className="legend-trail" />已走过</span>
+            <span><i className="legend-exit" />出口</span>
+            <span><i className="legend-wall" />挡板</span>
+          </div>
           <div className="maze-progress">
             {levels.map((item, index) => (
               <span key={item.id} className={index <= levelIndex ? 'active' : ''} />

@@ -726,6 +726,22 @@
     box-shadow: inset 0 0 0 1px rgba(255,255,255,.045);
   }
 
+  .maze-cell.seen.guide {
+    background: #24485c;
+    box-shadow:
+      inset 0 0 0 1px rgba(184, 220, 255, .26),
+      0 0 14px rgba(184, 220, 255, .2);
+  }
+
+  .maze-cell.seen.next-guide {
+    background: #83d7ff;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, .72),
+      0 0 20px rgba(184, 220, 255, .92),
+      0 0 48px rgba(184, 220, 255, .36);
+    animation: guidePulse 1.1s ease-in-out infinite;
+  }
+
   .maze-cell.trail.seen {
     background: #5e4a66;
   }
@@ -857,6 +873,72 @@
     margin: 0;
     color: rgba(247, 236, 208, .82);
     line-height: 1.8;
+  }
+
+  .maze-next-hint {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 14px 0 12px;
+    border: 1px solid rgba(184, 220, 255, .28);
+    border-radius: 14px;
+    background: rgba(184, 220, 255, .1);
+    padding: 10px 14px;
+  }
+
+  .maze-next-hint span {
+    color: rgba(247, 236, 208, .72);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .maze-next-hint strong {
+    color: #b8dcff;
+    font-size: 30px;
+    line-height: 1;
+    text-shadow: 0 0 16px rgba(184, 220, 255, .9);
+  }
+
+  .maze-legend {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 12px 0 18px;
+  }
+
+  .maze-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(247, 236, 208, .76);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .maze-legend i {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+  }
+
+  .legend-next {
+    background: #83d7ff;
+    box-shadow: 0 0 12px rgba(184, 220, 255, .9);
+  }
+
+  .legend-trail {
+    background: #5e4a66;
+  }
+
+  .legend-exit {
+    background: #ffe59e;
+    box-shadow: 0 0 12px rgba(255, 229, 158, .8);
+  }
+
+  .legend-wall {
+    background: linear-gradient(135deg, #00f5ff, #ff3cd6);
   }
 
   .maze-progress {
@@ -1082,5 +1164,14 @@
   52% {
     opacity: 1;
     transform: translate(-50%, -50%) skewX(-5deg);
+  }
+}
+
+@keyframes guidePulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.34);
   }
 }
