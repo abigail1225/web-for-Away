@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-const cards = Array.from({ length: 13 }, (_, index) => index);
+const cards = Array.from({ length: 23 }, (_, index) => index);
 
 export default function TarotPage({ onComplete }) {
   const [hovered, setHovered] = useState(null);
@@ -14,10 +14,10 @@ export default function TarotPage({ onComplete }) {
         const offset = index - center;
         return {
           card,
-          rotation: offset * 8,
-          x: offset * 42,
-          y: Math.abs(offset) * 9,
-          delay: `${index * 90}ms`,
+          rotation: offset * 4.8,
+          x: offset * 43,
+          y: Math.abs(offset) * 5.8,
+          delay: `${index * 56}ms`,
         };
       }),
     [],
