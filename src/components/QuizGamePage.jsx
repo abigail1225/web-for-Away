@@ -14,7 +14,7 @@ export default function QuizGamePage({ onComplete }) {
   const question = quizQuestions[questionIndex];
   const isLast = questionIndex === quizQuestions.length - 1;
   const collectedLetters = useMemo(
-    () => quizQuestions.map((item) => item.answer.charAt(0)),
+    () => quizQuestions.map((item) => item.finalLetter || item.answer.charAt(0)),
     [],
   );
 
@@ -61,11 +61,15 @@ export default function QuizGamePage({ onComplete }) {
         <section className="quiz-finale">
           <p className="quiz-kicker">All letters unlocked</p>
           <h1 aria-label="I love You">
-            {collectedLetters.map((letter, index) => (
-              <span key={`${letter}-${index}`} style={letterStyles[index]}>
-                {letter}
-              </span>
-            ))}
+            {collectedLetters.map((letter, index) => {
+              const spacer = index === 0 || index === 4 ? ' ' : '';
+              return (
+                <span key={`${letter}-${index}`} style={letterStyles[index]}>
+                  {letter}
+                  {spacer}
+                </span>
+              );
+            })}
           </h1>
           <p>{quizIntro.finalMessage}</p>
           <button type="button" className="btn btn-rose" onClick={onComplete}>

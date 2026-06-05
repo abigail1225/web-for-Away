@@ -57,14 +57,14 @@ src/data/siteData.js
 默认图片路径如下。你可以把图片放进 `public/quiz/`，也可以直接把照片和文字发给我，我来替换：
 
 ```text
-public/quiz/01-intp.jpg
-public/quiz/02-laura.jpg
-public/quiz/03-outlook.jpg
-public/quiz/04-v.jpg
-public/quiz/05-ee.jpg
-public/quiz/06-yolo.jpg
-public/quiz/07-outlook.jpg
-public/quiz/08-uno.jpg
+public/quiz/01-intp.png
+public/quiz/02-laura.png
+public/quiz/03-owl.png
+public/quiz/04-v.png
+public/quiz/05-ee.png
+public/quiz/06-yolo.png
+public/quiz/07-outlook.png
+public/quiz/08-uno.png
 ```
 
 小游戏答案支持多个可接受答案，例如：
