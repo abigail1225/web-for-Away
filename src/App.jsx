@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import GamePage from './components/GamePage.jsx';
 import MailboxPage from './components/MailboxPage.jsx';
-import MazeGamePage from './components/MazeGamePage.jsx';
 import OpeningPage from './components/OpeningPage.jsx';
 import PhotoWallPage from './components/PhotoWallPage.jsx';
+import QuizGamePage from './components/QuizGamePage.jsx';
 import SiteNav from './components/SiteNav.jsx';
 import TarotPage from './components/TarotPage.jsx';
 
@@ -15,11 +15,11 @@ export default function App() {
   }
 
   if (stage === 'tarot') {
-    return <TarotPage onComplete={() => setStage('maze')} />;
+    return <TarotPage onComplete={() => setStage('quiz')} />;
   }
 
-  if (stage === 'maze') {
-    return <MazeGamePage onComplete={() => setStage('main')} />;
+  if (stage === 'quiz') {
+    return <QuizGamePage onComplete={() => setStage('main')} />;
   }
 
   return (

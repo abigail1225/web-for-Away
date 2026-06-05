@@ -447,7 +447,7 @@
   }
 
   .tarot-kicker,
-  .maze-kicker {
+  .quiz-kicker {
     margin: 0 0 10px;
     color: #f7c2d2;
     font-size: 12px;
@@ -658,382 +658,220 @@
     line-height: 1.8;
   }
 
+  .quiz-page {
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 28% 38%, rgba(184, 220, 255, .16), transparent 26%),
+      radial-gradient(circle at 70% 58%, rgba(255, 159, 159, .12), transparent 28%),
+      linear-gradient(145deg, #050507, #111018 58%, #030305);
+    color: #fff7df;
+    padding: 34px 20px;
+  }
+
+  .quiz-stage {
+    display: grid;
+    min-height: calc(100vh - 68px);
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    grid-template-columns: minmax(300px, .98fr) minmax(320px, .82fr);
+    gap: clamp(26px, 5vw, 74px);
+    align-items: center;
+  }
+
+  .quiz-photo-wrap {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+
+  .quiz-photo-wrap::before {
+    content: "";
+    position: absolute;
+    width: min(58vw, 560px);
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255,255,255,.15), transparent 62%);
+    filter: blur(10px);
+  }
+
+  .quiz-photo {
+    position: relative;
+    z-index: 2;
+    width: min(560px, 100%);
+    max-height: min(72vh, 640px);
+    object-fit: contain;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.06);
+    box-shadow: 0 34px 110px rgba(0, 0, 0, .46), 0 0 38px rgba(184, 220, 255, .16);
+    animation: quizFloatIn .7s cubic-bezier(.18,.84,.24,1) both;
+  }
+
+  .quiz-photo-placeholder {
+    display: grid;
+    min-height: 420px;
+    place-items: center;
+    padding: 28px;
+    text-align: center;
+  }
+
+  .quiz-photo-placeholder span {
+    display: block;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(52px, 7vw, 96px);
+  }
+
+  .quiz-photo-placeholder small {
+    color: rgba(255,247,223,.58);
+  }
+
+  .quiz-dialogue {
+    position: relative;
+    z-index: 3;
+    border-left: 1px solid rgba(255,255,255,.16);
+    padding-left: clamp(20px, 4vw, 44px);
+  }
+
+  .quiz-dialogue h1 {
+    margin: 0 0 22px;
+    font-family: Georgia, "Times New Roman", "Songti SC", serif;
+    font-size: clamp(38px, 5vw, 72px);
+    line-height: 1;
+  }
+
+  .quiz-bubble {
+    display: block;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 18px;
+    background: rgba(255,255,255,.08);
+    padding: 18px 20px;
+    color: rgba(255,247,223,.88);
+    line-height: 1.9;
+    text-align: left;
+    box-shadow: 0 18px 48px rgba(0,0,0,.2);
+  }
+
+  button.quiz-bubble {
+    cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+
+  button.quiz-bubble:hover {
+    transform: translateY(-2px);
+    border-color: rgba(184,220,255,.48);
+  }
+
+  .quiz-form {
+    display: grid;
+    gap: 14px;
+  }
+
+  .quiz-form label {
+    color: rgba(255,247,223,.7);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .quiz-form input {
+    width: 100%;
+    border: 1px solid rgba(184,220,255,.32);
+    border-radius: 16px;
+    background: rgba(255,255,255,.1);
+    padding: 14px 16px;
+    color: #fff7df;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+
+  .quiz-form input:focus {
+    border-color: rgba(184,220,255,.72);
+    box-shadow: 0 0 0 4px rgba(184,220,255,.14);
+  }
+
+  .quiz-form input:disabled {
+    opacity: .72;
+  }
+
+  .quiz-feedback {
+    margin: 0;
+    border-radius: 14px;
+    background: rgba(255,159,159,.13);
+    padding: 12px 14px;
+    color: #ffc0ce;
+    line-height: 1.7;
+  }
+
+  .quiz-feedback.correct {
+    background: rgba(157,255,181,.12);
+    color: #caffd4;
+  }
+
+  .quiz-answer-reveal {
+    display: grid;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: #fff7df;
+    cursor: pointer;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(58px, 8vw, 118px);
+    font-weight: 900;
+    line-height: .94;
+    text-align: left;
+    text-shadow: 0 0 34px rgba(255,255,255,.18);
+    animation: answerPop .45s cubic-bezier(.18,.84,.24,1) both;
+  }
+
+  .quiz-answer-reveal span {
+    display: inline-block;
+    margin-right: .03em;
+    text-shadow: 0 0 22px currentColor;
+  }
+
+  .quiz-answer-reveal small {
+    margin-top: 18px;
+    color: rgba(255,247,223,.62);
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.6;
+  }
+
+  .quiz-finale-page {
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+
+  .quiz-finale {
+    width: min(980px, 100%);
+  }
+
+  .quiz-finale h1 {
+    display: flex;
+    justify-content: center;
+    gap: clamp(8px, 2vw, 24px);
+    margin: 0 0 22px;
+    font-size: clamp(54px, 11vw, 148px);
+    line-height: .95;
+  }
+
+  .quiz-finale h1 span {
+    text-shadow: 0 0 24px currentColor;
+  }
+
+  .quiz-finale p {
+    margin: 0 auto 28px;
+    max-width: 560px;
+    color: rgba(255,247,223,.72);
+    line-height: 1.9;
+  }
+
   .mail-card {
     @apply min-h-44 rounded-lg border border-[#e9c87b]/60 bg-[#fffaf0]/[.72] p-5 shadow-soft transition hover:-translate-y-1 hover:bg-white/[.86];
     border-left: 6px solid rgba(217, 194, 255, .92);
-  }
-
-  .maze-page {
-    min-height: 100vh;
-    overflow: hidden;
-    background: radial-gradient(circle at 50% 40%, #202536, #050507 62%);
-    color: #f7ecd0;
-    padding: 28px 18px;
-  }
-
-  .maze-head,
-  .maze-reveal {
-    margin: 0 auto;
-    width: min(1120px, 100%);
-    text-align: center;
-  }
-
-  .maze-head h1,
-  .maze-reveal h1 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(40px, 6vw, 86px);
-    line-height: 1;
-  }
-
-  .maze-head p:not(.maze-kicker) {
-    color: rgba(247, 236, 208, .72);
-  }
-
-  .maze-wrap {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 300px;
-    gap: 24px;
-    align-items: center;
-    margin: 26px auto 0;
-    width: min(1120px, 100%);
-  }
-
-  .maze-grid {
-    display: grid;
-    grid-template-columns: repeat(var(--maze-size), 1fr);
-    width: min(74vh, 680px);
-    max-width: 100%;
-    aspect-ratio: 1;
-    margin: 0 auto;
-    border: 1px solid rgba(255,255,255,.12);
-    background: #020203;
-    box-shadow: 0 36px 90px rgba(0,0,0,.45);
-  }
-
-  .maze-cell {
-    position: relative;
-    background: #020203;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.015);
-  }
-
-  .maze-cell.seen.wall {
-    background: #11121a;
-  }
-
-  .maze-cell.seen.path {
-    background: #353044;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.045);
-  }
-
-  .maze-cell.seen.guide {
-    background: #24485c;
-    box-shadow:
-      inset 0 0 0 1px rgba(184, 220, 255, .26),
-      0 0 14px rgba(184, 220, 255, .2);
-  }
-
-  .maze-cell.seen.next-guide {
-    background: #83d7ff;
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, .72),
-      0 0 20px rgba(184, 220, 255, .92),
-      0 0 48px rgba(184, 220, 255, .36);
-    animation: guidePulse 1.1s ease-in-out infinite;
-  }
-
-  .maze-cell.trail.seen {
-    background: #5e4a66;
-  }
-
-  .maze-cell.seen.obstacle {
-    background:
-      linear-gradient(135deg, rgba(0, 255, 255, .22), transparent 40%),
-      repeating-linear-gradient(45deg, rgba(255, 60, 214, .24) 0 2px, transparent 2px 7px),
-      #15101f;
-    box-shadow:
-      inset 0 0 0 1px rgba(0, 245, 255, .35),
-      inset 0 0 18px rgba(255, 60, 214, .2),
-      0 0 12px rgba(0, 245, 255, .12);
-  }
-
-  .maze-cell.seen.obstacle.cyber-tone-1 {
-    background:
-      linear-gradient(135deg, rgba(255, 235, 84, .24), transparent 42%),
-      repeating-linear-gradient(90deg, rgba(255, 60, 214, .18) 0 2px, transparent 2px 8px),
-      #1e1424;
-    box-shadow: inset 0 0 0 1px rgba(255, 235, 84, .34), 0 0 12px rgba(255, 235, 84, .13);
-  }
-
-  .maze-cell.seen.obstacle.cyber-tone-2 {
-    background:
-      linear-gradient(135deg, rgba(255, 60, 214, .28), transparent 45%),
-      repeating-linear-gradient(135deg, rgba(0, 245, 255, .18) 0 2px, transparent 2px 8px),
-      #170f2b;
-    box-shadow: inset 0 0 0 1px rgba(255, 60, 214, .38), 0 0 12px rgba(255, 60, 214, .16);
-  }
-
-  .maze-cell.seen.obstacle.cyber-tone-3 {
-    background:
-      linear-gradient(135deg, rgba(127, 255, 124, .2), transparent 45%),
-      repeating-linear-gradient(45deg, rgba(0, 245, 255, .22) 0 2px, transparent 2px 7px),
-      #0f1e21;
-    box-shadow: inset 0 0 0 1px rgba(127, 255, 124, .3), 0 0 12px rgba(127, 255, 124, .12);
-  }
-
-  .maze-cell.seen.obstacle.cyber-tone-4 {
-    background:
-      linear-gradient(135deg, rgba(255, 117, 87, .26), transparent 45%),
-      repeating-linear-gradient(0deg, rgba(255, 235, 84, .18) 0 2px, transparent 2px 8px),
-      #21140f;
-    box-shadow: inset 0 0 0 1px rgba(255, 117, 87, .34), 0 0 12px rgba(255, 117, 87, .12);
-  }
-
-  .maze-obstacle-sign {
-    z-index: 5;
-    align-self: center;
-    justify-self: stretch;
-    overflow: hidden;
-    border: 1px solid rgba(0, 245, 255, .52);
-    background:
-      linear-gradient(90deg, rgba(0, 245, 255, .12), rgba(255, 60, 214, .12)),
-      rgba(4, 7, 18, .82);
-    padding: 4px 7px;
-    color: #9ffcff;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: clamp(8px, 1.12vw, 13px);
-    font-weight: 900;
-    letter-spacing: 0;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 0 0 6px #00f5ff, 0 0 10px #ff3cd6;
-    box-shadow: inset 0 0 12px rgba(0, 245, 255, .12), 0 0 16px rgba(255, 60, 214, .14);
-    animation: cyberFlicker 1.35s steps(2, end) infinite;
-    pointer-events: none;
-  }
-
-  .maze-obstacle-sign.unseen {
-    opacity: 0;
-  }
-
-  .maze-obstacle-sign.cyber-tone-1 {
-    border-color: rgba(255, 235, 84, .6);
-    color: #fff39a;
-    text-shadow: 0 0 7px #ffeb54, 0 0 12px #ff3cd6;
-  }
-
-  .maze-obstacle-sign.cyber-tone-2 {
-    border-color: rgba(255, 60, 214, .62);
-    color: #ffd1f5;
-    text-shadow: 0 0 7px #ff3cd6, 0 0 12px #00f5ff;
-  }
-
-  .maze-obstacle-sign.cyber-tone-3 {
-    border-color: rgba(127, 255, 124, .58);
-    color: #cbffc9;
-    text-shadow: 0 0 7px #7fff7c, 0 0 12px #00f5ff;
-  }
-
-  .maze-obstacle-sign.cyber-tone-4 {
-    border-color: rgba(255, 117, 87, .58);
-    color: #ffd0c5;
-    text-shadow: 0 0 7px #ff7557, 0 0 12px #ffeb54;
-  }
-
-  .maze-cell.exit.seen::after,
-  .maze-cell.player::after {
-    content: "";
-    position: absolute;
-    inset: 18%;
-    border-radius: 999px;
-  }
-
-  .maze-cell.exit.seen::after {
-    background: #ffe59e;
-    box-shadow: 0 0 18px #ffe59e;
-  }
-
-  .maze-cell.player::after {
-    inset: 12%;
-    background: #b8dcff;
-    box-shadow: 0 0 24px rgba(184, 220, 255, .92), 0 0 70px rgba(184, 220, 255, .34);
-  }
-
-  .maze-panel {
-    border: 1px solid rgba(255,255,255,.14);
-    border-radius: 16px;
-    background: rgba(255,255,255,.07);
-    padding: 20px;
-    backdrop-filter: blur(12px);
-  }
-
-  .maze-panel p {
-    min-height: 58px;
-    margin: 0;
-    color: rgba(247, 236, 208, .82);
-    line-height: 1.8;
-  }
-
-  .maze-next-hint {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin: 14px 0 12px;
-    border: 1px solid rgba(184, 220, 255, .28);
-    border-radius: 14px;
-    background: rgba(184, 220, 255, .1);
-    padding: 10px 14px;
-  }
-
-  .maze-next-hint span {
-    color: rgba(247, 236, 208, .72);
-    font-size: 13px;
-    font-weight: 800;
-  }
-
-  .maze-next-hint strong {
-    color: #b8dcff;
-    font-size: 30px;
-    line-height: 1;
-    text-shadow: 0 0 16px rgba(184, 220, 255, .9);
-  }
-
-  .maze-legend {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    margin: 12px 0 18px;
-  }
-
-  .maze-legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    color: rgba(247, 236, 208, .76);
-    font-size: 12px;
-    font-weight: 800;
-  }
-
-  .maze-legend i {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border-radius: 4px;
-  }
-
-  .legend-next {
-    background: #83d7ff;
-    box-shadow: 0 0 12px rgba(184, 220, 255, .9);
-  }
-
-  .legend-trail {
-    background: #5e4a66;
-  }
-
-  .legend-exit {
-    background: #ffe59e;
-    box-shadow: 0 0 12px rgba(255, 229, 158, .8);
-  }
-
-  .legend-wall {
-    background: linear-gradient(135deg, #00f5ff, #ff3cd6);
-  }
-
-  .maze-progress {
-    display: flex;
-    gap: 8px;
-    margin: 18px 0;
-  }
-
-  .maze-progress span {
-    height: 8px;
-    flex: 1;
-    border-radius: 999px;
-    background: rgba(255,255,255,.16);
-  }
-
-  .maze-progress .active {
-    background: #ffe59e;
-  }
-
-  .maze-controls {
-    display: grid;
-    grid-template-columns: repeat(3, 54px);
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .maze-controls button {
-    display: grid;
-    height: 54px;
-    place-items: center;
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 14px;
-    background: rgba(255,255,255,.12);
-    color: #fff7df;
-    font-size: 22px;
-    font-weight: 900;
-  }
-
-  .maze-controls button:first-child {
-    grid-column: 2;
-  }
-
-  .maze-reveal-page {
-    display: grid;
-    place-items: center;
-  }
-
-  .maze-reveal h1 {
-    color: #fff7df;
-    font-size: clamp(54px, 10vw, 140px);
-  }
-
-  .replay-strip {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-    margin: 28px auto;
-    width: min(920px, 100%);
-  }
-
-  .mini-map {
-    display: grid;
-    grid-template-columns: repeat(var(--maze-size), 1fr);
-    aspect-ratio: 1;
-    border: 1px solid rgba(255,255,255,.16);
-    background: rgba(255,255,255,.04);
-  }
-
-  .mini-map span {
-    background: transparent;
-  }
-
-  .mini-map .mini-path {
-    background: rgba(255,255,255,.14);
-  }
-
-  .mini-map .mini-trail {
-    background: #ff9f9f;
-    box-shadow: 0 0 8px rgba(255,159,159,.48);
-  }
-
-  .mini-map .mini-exit {
-    background: #ffe59e;
-  }
-
-  .puzzle-portal {
-    border: 0;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #ffe59e, #ff9f9f);
-    padding: 16px 30px;
-    color: #2b1c12;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 24px;
-    font-weight: 800;
-    box-shadow: 0 20px 42px rgba(255, 159, 159, .22);
   }
 }
 
@@ -1126,18 +964,22 @@
     padding: 0 0 32px;
   }
 
-  .maze-wrap {
+  .quiz-stage {
     grid-template-columns: 1fr;
+    align-items: start;
   }
 
-  .maze-panel {
-    width: min(460px, 100%);
-    margin: 0 auto;
+  .quiz-dialogue {
+    border-left: 0;
+    padding-left: 0;
   }
 
-  .replay-strip {
-    grid-template-columns: 1fr;
-    width: min(360px, 100%);
+  .quiz-photo {
+    max-height: 48vh;
+  }
+
+  .quiz-finale h1 {
+    flex-wrap: wrap;
   }
 }
 
@@ -1152,26 +994,24 @@
   }
 }
 
-@keyframes cyberFlicker {
-  0%, 100% {
-    opacity: .92;
-    filter: saturate(1.1);
+@keyframes quizFloatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(.96);
   }
-  45% {
-    opacity: .5;
-    filter: saturate(1.8);
-  }
-  52% {
+  100% {
     opacity: 1;
-    transform: translate(-50%, -50%) skewX(-5deg);
+    transform: translateY(0) scale(1);
   }
 }
 
-@keyframes guidePulse {
-  0%, 100% {
-    filter: brightness(1);
+@keyframes answerPop {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(.95);
   }
-  50% {
-    filter: brightness(1.34);
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

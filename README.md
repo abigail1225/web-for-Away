@@ -1,6 +1,6 @@
 # Happy Birthday 单页网站
 
-一个可以部署到 GitHub Pages 的 React + Vite + Tailwind CSS 生日网站。主线是：开屏生日信 -> 塔罗牌抽取 -> 暗色视野小游戏 -> Puzzle Time 兑换礼物 -> 照片墙回忆 -> 信件阅读。
+一个可以部署到 GitHub Pages 的 React + Vite + Tailwind CSS 生日网站。主线是：开屏生日信 -> 塔罗牌抽取 -> 图片填空小游戏 -> Puzzle Time 兑换礼物 -> 照片墙回忆 -> 信件阅读。
 
 ## 安装与运行
 
@@ -46,12 +46,26 @@ src/data/siteData.js
 - `photoCategories`：照片分类、图片路径、图片说明
 - `letters`：信箱日期、标题、正文
 
-新增的塔罗牌和暗色小游戏在组件里：
+新增的塔罗牌和图片填空小游戏在这里：
 
 - `src/components/TarotPage.jsx`：塔罗牌数量、抽牌和翻牌内容
-- `src/components/MazeGamePage.jsx`：三关路线、起点、终点、障碍物路径
+- `src/components/QuizGamePage.jsx`：图片浮现、对话、输入、答题和最终首字母展示逻辑
+- `src/data/quizGameData.js`：8 道题的图片路径、答案、打招呼文案、提示语、错误回复和正确回复
 
-暗色小游戏支持键盘方向键和 WASD，也提供了屏幕上的方向按钮。三关都有唯一正确路线，分别形成 `I`、爱心和 `U`；界面会用蓝色发光格子提示下一步，粉色表示已走过路线，黄色表示出口。地形里有赛博朋克像素风挡板、霓虹长横幅和闪烁文字，例如 `BUAA CHORUS`、`邓欣帮弄`、`SZDK游戏代通关`、`咨询电话18612258636`、`Chat GPT` 等。三关通关后会显示正确路线回放，并通过 `Puzzle Time` 按钮进入礼物解锁页。
+图片填空小游戏一共 8 题。每题都有一张提示图片，玩家输入正确答案后会显示大号答案，并把首字母收集起来；8 个首字母最终组成 `I love You`，再进入 `Puzzle Time` 礼物解锁页。
+
+默认图片路径如下。你可以把图片放进 `public/quiz/`，也可以直接把照片和文字发给我，我来替换：
+
+```text
+public/quiz/01-intp.jpg
+public/quiz/02-laura.jpg
+public/quiz/03-outlook.jpg
+public/quiz/04-v.jpg
+public/quiz/05-ee.jpg
+public/quiz/06-yolo.jpg
+public/quiz/07-outlook.jpg
+public/quiz/08-uno.jpg
+```
 
 小游戏答案支持多个可接受答案，例如：
 
@@ -101,7 +115,7 @@ src/
   components/
     OpeningPage.jsx
     TarotPage.jsx
-    MazeGamePage.jsx
+    QuizGamePage.jsx
     GamePage.jsx
     PhotoWallPage.jsx
     MailboxPage.jsx
@@ -109,9 +123,11 @@ src/
     SectionTitle.jsx
     SiteNav.jsx
   data/
+    quizGameData.js
     siteData.js
 public/
   birthday-song.mp3
+  quiz/
   photos/
 ```
 
