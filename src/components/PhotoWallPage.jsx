@@ -1,14 +1,17 @@
 import { useMemo, useState } from 'react';
 import { assetPath, photoCategories } from '../data/siteData.js';
+import Modal from './Modal.jsx';
 import SectionTitle from './SectionTitle.jsx';
 
-function PhotoCard({ photo, index }) {
+function PhotoCard({ photo, index, onOpen }) {
   const [failed, setFailed] = useState(false);
   const rotate = [-1.5, 1.2, -0.8, 1.6, -1.1, 0.7][index % 6];
 
   return (
-    <figure
-      className="group overflow-hidden rounded-[24px] border-[7px] border-white/75 bg-white/70 shadow-soft transition hover:-translate-y-1"
+    <button
+      type="button"
+      onClick={() => onOpen(photo)}
+      className="photo-card group text-left"
       style={{ transform: `rotate(${rotate}deg)` }}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-white via-[#fff1c2] to-[#ddecff]">
@@ -31,18 +34,25 @@ function PhotoCard({ photo, index }) {
             </div>
           </div>
         )}
+        <span className="photo-peek">点开回忆</span>
       </div>
       <figcaption className="bg-white/[.78] px-4 py-3 text-sm font-bold text-birthday-muted">{photo.caption}</figcaption>
-    </figure>
+    </button>
   );
 }
 
 export default function PhotoWallPage() {
   const [activeId, setActiveId] = useState(photoCategories[0].id);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [spotlightFailed, setSpotlightFailed] = useState(false);
   const activeCategory = useMemo(
     () => photoCategories.find((category) => category.id === activeId) || photoCategories[0],
     [activeId],
   );
+  const openPhoto = (photo) => {
+    setSpotlightFailed(false);
+    setSelectedPhoto(photo);
+  };
 
   return (
     <section id="photos" className="section-shell">
@@ -73,12 +83,42 @@ export default function PhotoWallPage() {
           <code className="ml-1 rounded bg-white/75 px-2 py-1">{activeCategory.folder}</code>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div key={activeCategory.id} className="photo-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {activeCategory.photos.map((photo, index) => (
-            <PhotoCard key={photo.src} photo={photo} index={index} />
+            <PhotoCard key={photo.src} photo={photo} index={index} onOpen={openPhoto} />
           ))}
         </div>
       </div>
+
+      <Modal
+        open={Boolean(selectedPhoto)}
+        title={selectedPhoto?.caption || '照片'}
+        onClose={() => setSelectedPhoto(null)}
+        actions={
+          <button type="button" onClick={() => setSelectedPhoto(null)} className="btn btn-soft">
+            收起照片
+          </button>
+        }
+      >
+        {selectedPhoto ? (
+          <div className="photo-spotlight">
+            {!spotlightFailed ? (
+              <img
+                src={assetPath(selectedPhoto.src)}
+                alt={selectedPhoto.caption}
+                onError={() => setSpotlightFailed(true)}
+              />
+            ) : (
+              <div className="photo-spotlight-placeholder">
+                <span>✦</span>
+                <strong>{selectedPhoto.caption}</strong>
+                <small>照片放到对应路径后，这里会显示大图。</small>
+              </div>
+            )}
+            <p>{selectedPhoto.src}</p>
+          </div>
+        ) : null}
+      </Modal>
     </section>
   );
 }

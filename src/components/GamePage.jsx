@@ -7,7 +7,7 @@ const storageKey = 'birthday-puzzle-solved';
 
 const normalizeAnswer = (value) => value.trim().replace(/\s+/g, '').toLowerCase();
 
-export default function GamePage() {
+export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
   const [levelIndex, setLevelIndex] = useState(0);
   const [answer, setAnswer] = useState('');
   const [message, setMessage] = useState('');
@@ -49,6 +49,10 @@ export default function GamePage() {
     if (!isLastLevel) {
       setLevelIndex((current) => current + 1);
     } else {
+      if (onFinish) {
+        onFinish();
+        return;
+      }
       window.location.hash = 'photos';
     }
   };
@@ -72,6 +76,15 @@ export default function GamePage() {
               <span className="rounded-full bg-birthday-blue/45 px-4 py-2 text-sm font-extrabold text-[#4d6588]">
                 {level.type}
               </span>
+            </div>
+
+            <div className="puzzle-progress" aria-label="Puzzle Time 解锁进度">
+              {gameLevels.map((item, index) => (
+                <span
+                  key={item.id}
+                  className={`puzzle-progress-dot ${index === levelIndex ? 'active' : ''} ${solved[item.id] ? 'solved' : ''}`}
+                />
+              ))}
             </div>
 
             <p className="leading-8 text-birthday-muted">{level.description}</p>
@@ -110,7 +123,7 @@ export default function GamePage() {
                   type="button"
                   key={item.id}
                   onClick={() => setLevelIndex(index)}
-                  className={`w-full rounded-2xl border px-4 py-3 text-left transition ${
+                  className={`puzzle-level-button w-full rounded-2xl border px-4 py-3 text-left transition ${
                     index === levelIndex
                       ? 'border-birthday-rose bg-birthday-pink/60'
                       : 'border-white/70 bg-white/[.65] hover:bg-white'
@@ -133,7 +146,7 @@ export default function GamePage() {
         onClose={() => setSuccessOpen(false)}
         actions={
           <button type="button" onClick={goNext} className="btn btn-lavender">
-            {isLastLevel ? '去照片墙' : '进入下一关'}
+            {isLastLevel ? finishLabel : '进入下一关'}
           </button>
         }
       >

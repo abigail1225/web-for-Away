@@ -41,7 +41,7 @@ export default function MailboxPage() {
                 key={letter.id}
                 type="button"
                 onClick={() => openLetter(letter)}
-                className="mail-card text-left"
+                className={`mail-card text-left ${selected?.id === letter.id ? 'is-selected' : ''}`}
               >
                 <span className="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-birthday-lavender/70 text-2xl shadow-sm">
                   ✉
@@ -72,7 +72,7 @@ export default function MailboxPage() {
               <button type="button" onClick={saveReply} className="btn btn-rose">
                 保存回复
               </button>
-              {savedText ? <span className="text-sm font-bold text-birthday-muted">{savedText}</span> : null}
+              {savedText ? <span className="saved-stamp text-sm font-bold text-birthday-muted">{savedText}</span> : null}
             </div>
           </article>
         </div>
@@ -105,7 +105,7 @@ export default function MailboxPage() {
           className="mt-3 min-h-32 w-full resize-y rounded-2xl border-2 border-[#f3c985] bg-white/80 px-4 py-3 outline-none transition focus:border-birthday-roseDeep focus:ring-4 focus:ring-birthday-rose/20"
           placeholder="可以在这里写下回复，内容会保存在当前浏览器里。"
         />
-        {savedText ? <p className="mt-3 text-sm font-bold text-birthday-muted">{savedText}</p> : null}
+        {savedText ? <p className="saved-stamp mt-3 text-sm font-bold text-birthday-muted">{savedText}</p> : null}
       </Modal>
     </section>
   );

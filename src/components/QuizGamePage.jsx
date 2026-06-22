@@ -4,12 +4,13 @@ import { letterStyles, quizIntro, quizQuestions } from '../data/quizGameData.js'
 
 const normalize = (value) => value.trim().replace(/\s+/g, '').toLowerCase();
 
-export default function QuizGamePage({ onComplete }) {
+export default function QuizGamePage({ onComplete, completeLabel = '进入 Puzzle Time' }) {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [phase, setPhase] = useState('greeting');
   const [answer, setAnswer] = useState('');
   const [feedback, setFeedback] = useState('');
   const [imageFailed, setImageFailed] = useState(false);
+  const [mistakeKey, setMistakeKey] = useState(0);
 
   const question = quizQuestions[questionIndex];
   const isLast = questionIndex === quizQuestions.length - 1;
@@ -36,6 +37,7 @@ export default function QuizGamePage({ onComplete }) {
     }
 
     setFeedback(question.wrongReply);
+    setMistakeKey((current) => current + 1);
   };
 
   const revealAnswer = () => {
@@ -53,6 +55,7 @@ export default function QuizGamePage({ onComplete }) {
     setAnswer('');
     setFeedback('');
     setImageFailed(false);
+    setMistakeKey(0);
   };
 
   if (phase === 'finale') {
@@ -73,7 +76,7 @@ export default function QuizGamePage({ onComplete }) {
           </h1>
           <p>{quizIntro.finalMessage}</p>
           <button type="button" className="btn btn-rose" onClick={onComplete}>
-            进入 Puzzle Time
+            {completeLabel}
           </button>
         </section>
       </main>
@@ -85,7 +88,7 @@ export default function QuizGamePage({ onComplete }) {
   return (
     <main className="quiz-page">
       <section className="quiz-stage">
-        <div className="quiz-photo-wrap">
+        <div className="quiz-photo-wrap" key={question.id}>
           {!imageFailed ? (
             <img
               src={assetPath(question.image)}
@@ -105,16 +108,32 @@ export default function QuizGamePage({ onComplete }) {
           <p className="quiz-kicker">
             Question {String(questionIndex + 1).padStart(2, '0')} / {String(quizQuestions.length).padStart(2, '0')}
           </p>
-          <h1>{phase === 'reveal' ? 'Answer unlocked' : quizIntro.title}</h1>
+          <div className="quiz-letter-track" aria-label="暗号进度">
+            {quizQuestions.map((item, index) => {
+              const unlocked = index < questionIndex || (index === questionIndex && (phase === 'reveal' || phase === 'finale'));
+              const active = index === questionIndex;
+              return (
+                <span
+                  key={item.id}
+                  className={`quiz-letter-dot ${unlocked ? 'unlocked' : ''} ${active ? 'active' : ''}`}
+                  style={unlocked ? letterStyles[index] : undefined}
+                >
+                  {unlocked ? item.finalLetter || item.answer.charAt(0) : '•'}
+                </span>
+              );
+            })}
+          </div>
+          {phase === 'reveal' ? <h1>Answer unlocked</h1> : null}
 
           {phase === 'greeting' ? (
             <button type="button" className="quiz-bubble" onClick={goNextBubble}>
-              {question.greeting || quizIntro.greeting}
+              <span>{question.greeting || quizIntro.greeting}</span>
+              <small className="tap-hint">点击继续</small>
             </button>
           ) : null}
 
           {phase === 'question' || phase === 'correct' ? (
-            <form onSubmit={submitAnswer} className="quiz-form">
+            <form onSubmit={submitAnswer} className={`quiz-form ${feedback && phase !== 'correct' ? 'has-error' : ''}`} key={mistakeKey}>
               <p className="quiz-bubble">{question.prompt || quizIntro.prompt}</p>
               <label htmlFor="quiz-answer">输入答案</label>
               <input

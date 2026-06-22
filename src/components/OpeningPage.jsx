@@ -55,9 +55,18 @@ export default function OpeningPage({ onEnter }) {
               aria-label="打开生日信"
             >
               <span className="env-paper">
-                To：{openingLetter.to}
-                <br />
-                {openingLetter.preview}
+                <span className="key-ui" aria-hidden="true">
+                  <span className="key-head">
+                    <span className="key-window" />
+                  </span>
+                  <span className="key-stem" />
+                  <span className="key-tooth key-tooth-one" />
+                  <span className="key-tooth key-tooth-two" />
+                </span>
+                <span className="key-label">
+                  <span>生日小屋钥匙</span>
+                  <small>轻轻收好</small>
+                </span>
               </span>
               <span className="env-panel env-left" />
               <span className="env-panel env-right" />
@@ -82,7 +91,7 @@ export default function OpeningPage({ onEnter }) {
               </article>
               <div className="mt-6 flex justify-center">
                 <button type="button" onClick={onEnter} className="btn btn-rose">
-                  进入生日网站
+                  用钥匙进小屋
                 </button>
               </div>
             </>

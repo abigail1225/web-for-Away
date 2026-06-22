@@ -1,11 +1,33 @@
 import { useMemo, useState } from 'react';
 
-const cards = Array.from({ length: 23 }, (_, index) => index);
+const tarotDeck = [
+  { id: 'sun', name: '太阳牌', english: 'The Sun', symbol: '☀' },
+  { id: 'fool', name: '愚人牌', english: 'The Fool', symbol: '∞' },
+  { id: 'magician', name: '魔术师牌', english: 'The Magician', symbol: '✦' },
+  { id: 'lovers', name: '恋人牌', english: 'The Lovers', symbol: '♥' },
+  { id: 'star', name: '星星牌', english: 'The Star', symbol: '✧' },
+  { id: 'world', name: '世界牌', english: 'The World', symbol: '◉' },
+  { id: 'high-priestess', name: '女祭司牌', english: 'The High Priestess', symbol: '☾' },
+  { id: 'empress', name: '女皇牌', english: 'The Empress', symbol: '♕' },
+];
 
-export default function TarotPage({ onComplete }) {
+const createRandomCards = () => {
+  const cards = Array.from({ length: 23 }, (_, index) => ({
+    ...tarotDeck[index % tarotDeck.length],
+    instanceId: index,
+  }));
+
+  return cards
+    .map((card) => ({ card, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ card }) => card);
+};
+
+export default function TarotPage({ onComplete, completeLabel = '进入下一段' }) {
   const [hovered, setHovered] = useState(null);
   const [chosen, setChosen] = useState(null);
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const cards = useMemo(() => createRandomCards(), []);
 
   const cardLayout = useMemo(
     () =>
@@ -36,7 +58,7 @@ export default function TarotPage({ onComplete }) {
       <section className="tarot-intro">
         <p className="tarot-kicker">Before the next secret</p>
         <h1>Pick a card</h1>
-        <p>随意抽一张。今天所有运气都会偏向同一个答案。</p>
+        <p>随意抽一张。愿今天的星光，把最温柔的好运交到你手里。</p>
       </section>
 
       <section className="tarot-table" aria-label="塔罗牌抽牌区">
@@ -44,9 +66,9 @@ export default function TarotPage({ onComplete }) {
           const active = hovered === index || chosen === index;
           return (
             <button
-              key={layout.card}
+              key={`${layout.card.id}-${layout.card.instanceId}`}
               type="button"
-              className={`tarot-card ${active ? 'active' : ''} ${chosen === index ? 'chosen' : ''}`}
+              className={`tarot-card tarot-${layout.card.id} ${active ? 'active' : ''} ${chosen === index ? 'chosen' : ''}`}
               style={{
                 '--rot': `${layout.rotation}deg`,
                 '--x': `${layout.x + (active && chosen === null ? pointer.x : 0)}px`,
@@ -56,21 +78,19 @@ export default function TarotPage({ onComplete }) {
               onMouseEnter={() => setHovered(index)}
               onFocus={() => setHovered(index)}
               onClick={() => setChosen(index)}
-              aria-label={`抽取第 ${index + 1} 张塔罗牌`}
+              aria-label={`抽取第 ${index + 1} 张塔罗牌，${layout.card.name}`}
             >
               <span className="tarot-card-inner">
                 <span className="tarot-back">
                   <span className="tarot-back-star">✦</span>
                 </span>
                 <span className="tarot-front">
-                  <span className="angel-card-art" aria-hidden="true">
-                    <span className="angel-crown">♕</span>
-                    <span className="angel-wings" />
-                    <span className="angel-head" />
-                    <span className="angel-body" />
-                    <span className="angel-arms" />
+                  <span className="major-card-art" aria-hidden="true">
+                    <span className="major-card-orbit" />
+                    <span className="major-card-symbol">{layout.card.symbol}</span>
                   </span>
-                  <span className="luckiest">The luckiest</span>
+                  <span className="tarot-card-title">{layout.card.name}</span>
+                  <span className="tarot-card-subtitle">{layout.card.english}</span>
                 </span>
               </span>
             </button>
@@ -80,9 +100,9 @@ export default function TarotPage({ onComplete }) {
 
       {chosen !== null ? (
         <div className="tarot-actions">
-          <p>命运已经翻面。下一段会变暗，请帮小人走到出口。</p>
+          <p>命运已经翻面。愿这张牌替你守住一束不被说破的光。</p>
           <button type="button" className="btn btn-rose" onClick={onComplete}>
-            进入下一段
+            {completeLabel}
           </button>
         </div>
       ) : null}
