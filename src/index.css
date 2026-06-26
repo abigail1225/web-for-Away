@@ -525,7 +525,7 @@
   }
 
   .fold-envelope.open .env-paper {
-    transform: translate(-50%, -92px) scale(1.02) rotate(1deg);
+    transform: translate(-50%, -58px) scale(1.02) rotate(1deg);
     opacity: 1;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,.8),
@@ -1988,6 +1988,154 @@
     font-weight: 900;
   }
 
+  .hug-surprise {
+    position: fixed;
+    right: clamp(14px, 2.2vw, 26px);
+    bottom: clamp(14px, 2.2vw, 26px);
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+  }
+
+  .hug-button {
+    position: relative;
+    display: grid;
+    width: 66px;
+    height: 66px;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.82);
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 34% 26%, rgba(255,255,255,.88) 0 11px, transparent 12px),
+      radial-gradient(circle at 66% 28%, rgba(255,255,255,.72) 0 7px, transparent 8px),
+      linear-gradient(145deg, #ffb8cc 0%, #ff7f98 48%, #ffd68a 100%);
+    color: #fff7df;
+    box-shadow:
+      0 18px 36px rgba(151, 73, 72, .25),
+      inset 0 -8px 18px rgba(128, 51, 72, .12),
+      inset 0 8px 18px rgba(255,255,255,.32);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  }
+
+  .hug-button::before,
+  .hug-button::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    width: 10px;
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(111, 51, 59, .52);
+    box-shadow: 0 1px 0 rgba(255,255,255,.32);
+  }
+
+  .hug-button::before {
+    left: 20px;
+    transform: rotate(-8deg);
+  }
+
+  .hug-button::after {
+    right: 20px;
+    transform: rotate(8deg);
+  }
+
+  .hug-button:hover,
+  .hug-button:focus-visible {
+    transform: translateY(-4px) scale(1.04) rotate(-2deg);
+    filter: saturate(1.06);
+    box-shadow:
+      0 24px 42px rgba(151, 73, 72, .3),
+      inset 0 -8px 18px rgba(128, 51, 72, .12),
+      inset 0 8px 18px rgba(255,255,255,.34);
+  }
+
+  .hug-button:focus-visible {
+    outline: 4px solid rgba(255, 184, 204, .38);
+    outline-offset: 4px;
+  }
+
+  .hug-heart {
+    position: relative;
+    z-index: 1;
+    margin-top: 12px;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 3px 10px rgba(100, 50, 45, .18);
+  }
+
+  .hug-button-sparkle {
+    position: absolute;
+    border-radius: 999px;
+    background: rgba(255,255,255,.78);
+  }
+
+  .sparkle-one {
+    left: 13px;
+    bottom: 18px;
+    width: 8px;
+    height: 8px;
+  }
+
+  .sparkle-two {
+    right: 13px;
+    bottom: 22px;
+    width: 5px;
+    height: 5px;
+  }
+
+  .hug-tooltip,
+  .hug-message-pop,
+  .hug-count {
+    border: 1px solid rgba(255,255,255,.74);
+    border-radius: 999px;
+    background: rgba(255,250,240,.93);
+    color: #6a3f24;
+    font-weight: 900;
+    box-shadow: 0 14px 28px rgba(91,59,34,.14);
+    backdrop-filter: blur(14px);
+    pointer-events: auto;
+  }
+
+  .hug-tooltip {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 10px);
+    padding: 9px 13px;
+    font-size: 13px;
+    opacity: 0;
+    white-space: nowrap;
+    transform: translateY(8px) scale(.96);
+    transition: opacity .18s ease, transform .18s ease;
+  }
+
+  .hug-surprise:hover .hug-tooltip,
+  .hug-surprise:focus-within .hug-tooltip {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .hug-message-pop {
+    padding: 10px 14px;
+    color: #8b3650;
+    font-size: 14px;
+    animation: hugMessagePop 1.9s ease both;
+  }
+
+  .hug-count {
+    max-width: min(238px, calc(100vw - 28px));
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 1.45;
+    text-align: center;
+  }
+
   .room-return {
     position: fixed;
     left: 18px;
@@ -2239,6 +2387,16 @@
     transform: scaleX(-1) rotate(-18deg);
   }
 
+  .decor-floor-cushion.is-cued {
+    filter: drop-shadow(0 0 18px rgba(255, 226, 122, .9));
+    animation: cuePulse 1.45s ease-in-out infinite;
+  }
+
+  .decor-floor-cushion.is-cued::before,
+  .decor-floor-cushion.is-cued::after {
+    box-shadow: 0 8px 14px rgba(95,58,32,.1), 0 0 18px rgba(255, 226, 122, .76);
+  }
+
   .decor-moon-note {
     left: 292px;
     top: 86px;
@@ -2291,6 +2449,26 @@
   .wall-object:hover .object-shape,
   .wall-object:focus-visible .object-shape {
     transform: translateY(-6px) rotate(var(--hover-rot, 0deg));
+  }
+
+  .wall-object.is-cued::after {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    z-index: 3;
+    pointer-events: none;
+    border: 3px solid rgba(255, 226, 122, .96);
+    border-radius: 22px;
+    box-shadow:
+      0 0 0 6px rgba(255, 226, 122, .18),
+      0 0 30px rgba(255, 226, 122, .72);
+    animation: cuePulse 1.45s ease-in-out infinite;
+  }
+
+  .wall-object.is-cued .object-glow {
+    opacity: 1;
+    transform: scale(1.12);
+    background: radial-gradient(circle, rgba(255, 226, 122, .7), transparent 66%);
   }
 
   .wall-message {
@@ -2866,6 +3044,33 @@
     padding: 10px 13px;
   }
 
+  .hug-surprise {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .hug-button {
+    width: 58px;
+    height: 58px;
+  }
+
+  .hug-button::before {
+    left: 17px;
+  }
+
+  .hug-button::after {
+    right: 17px;
+  }
+
+  .hug-heart {
+    margin-top: 10px;
+    font-size: 30px;
+  }
+
+  .hug-tooltip {
+    font-size: 12px;
+  }
+
   .memory-map-page {
     padding-inline: 12px;
   }
@@ -3067,7 +3272,7 @@
   }
 
   .fold-envelope.open .env-paper {
-    transform: translate(-50%, -64px) scale(1) rotate(1deg);
+    transform: translate(-50%, -42px) scale(1) rotate(1deg);
   }
 
   .fold-envelope.open .env-left {
@@ -3597,6 +3802,18 @@
   }
 }
 
+@keyframes cuePulse {
+  0%,
+  100% {
+    opacity: .72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+}
+
 @keyframes houseFloat {
   0%,
   100% {
@@ -3618,6 +3835,25 @@
   100% {
     opacity: 0;
     transform: translate(-50%, -48px) scale(1.55);
+  }
+}
+
+@keyframes hugMessagePop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(.92) rotate(-1deg);
+  }
+  16% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.04) rotate(1deg);
+  }
+  76% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scale(.96);
   }
 }
 

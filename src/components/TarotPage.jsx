@@ -56,7 +56,7 @@ export default function TarotPage({ onComplete, completeLabel = '进入下一段
   return (
     <main className={`tarot-page ${chosen !== null ? 'tarot-page-chosen' : ''}`} onMouseMove={movePointer}>
       <section className="tarot-intro">
-        <p className="tarot-kicker">Before the next secret</p>
+        <p className="tarot-kicker">bless you～</p>
         <h1>Pick a card</h1>
         <p>随意抽一张。愿今天的星光，把最温柔的好运交到你手里。</p>
       </section>
@@ -100,7 +100,7 @@ export default function TarotPage({ onComplete, completeLabel = '进入下一段
 
       {chosen !== null ? (
         <div className="tarot-actions">
-          <p>命运已经翻面。愿这张牌替你守住一束不被说破的光。</p>
+          <p>看来宇宙也在祝福你！生日快乐，我们都在陪着你。在这一年，你被很多人记住了</p>
           <button type="button" className="btn btn-rose" onClick={onComplete}>
             {completeLabel}
           </button>

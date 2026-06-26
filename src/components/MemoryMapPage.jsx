@@ -26,7 +26,7 @@ const rooms = [
   },
 ];
 
-export default function MemoryMapPage({ onEnterRoom, onBackToOpening }) {
+export default function MemoryMapPage({ activeCueId, onEnterRoom, onBackToOpening }) {
   return (
     <main className="memory-map-page">
       <section className="memory-map-hero">
@@ -53,7 +53,10 @@ export default function MemoryMapPage({ onEnterRoom, onBackToOpening }) {
             <span />
           </span>
           <span className="wall-decor decor-tiny-frame" aria-hidden="true" />
-          <span className="wall-decor decor-floor-cushion" aria-hidden="true" />
+          <span
+            className={`wall-decor decor-floor-cushion ${activeCueId === 'gift' ? 'is-cued' : ''}`}
+            aria-hidden="true"
+          />
           <span className="wall-decor decor-moon-note" aria-hidden="true" />
 
           {rooms.map((room, index) => (
@@ -61,7 +64,7 @@ export default function MemoryMapPage({ onEnterRoom, onBackToOpening }) {
               key={room.id}
               type="button"
               onClick={() => onEnterRoom(room.id)}
-              className={`wall-object ${room.className}`}
+              className={`wall-object ${room.className} ${activeCueId === room.id ? 'is-cued' : ''}`}
               style={{ '--delay': `${index * 80}ms` }}
               aria-label={room.label}
             >
