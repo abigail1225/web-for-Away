@@ -26,10 +26,10 @@ Replace the first Puzzle Time text challenge with a 3x3 rotation puzzle. Every t
 
 ### Puzzle Model
 
-Represent the board as an array of nine quarter-turn values: `0`, `1`, `2`, or `3`. A pure helper will:
+Represent the board as an array of nine integer quarter-turn counts. Initial values are `0`, `1`, `2`, or `3`; each click subtracts one without normalizing the stored count, so the CSS transition always travels exactly 90 degrees counterclockwise. Correctness is evaluated modulo four. A pure helper will:
 
 - rotate one indexed tile counterclockwise by one quarter-turn;
-- determine whether every value is `0`;
+- determine whether every value is equivalent to `0` modulo four;
 - create a randomized, guaranteed-unsolved starting board.
 
 Keeping these rules independent from rendering makes the completion logic easy to test.
@@ -47,7 +47,7 @@ Store the approved square bouquet illustration as a project asset. The browser l
 ## State And Data Flow
 
 - Entering or restarting level one creates a new guaranteed-unsolved board.
-- A tile activation updates one array element modulo four.
+- A tile activation subtracts one from a single array element; solved-state checks normalize the value modulo four.
 - Completion is derived from the board after every move rather than maintained as separate mutable state.
 - Once complete, the board exposes a single advance action and ignores tile rotations.
 - Advancing uses the page's existing level transition mechanism, so level two and later progress behavior remain unchanged.
@@ -71,9 +71,9 @@ Store the approved square bouquet illustration as a project asset. The browser l
 
 ### Unit Tests
 
-- Rotating a tile moves `0 -> 3 -> 2 -> 1 -> 0`, matching 90-degree counterclockwise turns.
+- Rotating a tile moves `0 -> -1 -> -2 -> -3 -> -4`, producing one 90-degree counterclockwise transition per click; both `0` and `-4` are correct orientations.
 - Only the requested tile changes.
-- Completion is true only when all nine rotations are `0`.
+- Completion is true only when all nine rotations are equivalent to `0` modulo four.
 - Random initialization always returns nine valid quarter-turn values and never returns an already solved board.
 
 ### Component Tests
