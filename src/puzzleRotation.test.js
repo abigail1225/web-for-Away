@@ -24,6 +24,12 @@ describe('puzzle rotation model', () => {
     assert.strictEqual(rotateTileLeft(board, 1.5), board);
   });
 
+  it('returns the same short board reference when index equals the board length', () => {
+    const board = [0, 0, 0];
+
+    assert.strictEqual(rotateTileLeft(board, 3), board);
+  });
+
   it('detects solved boards by modulo four rotation counts', () => {
     assert.equal(isPuzzleSolved([0, 0, 0, 0, 0, 0, 0, 0, 0]), true);
     assert.equal(isPuzzleSolved([-4, 0, 0, 0, 0, 0, 0, 0, 0]), true);

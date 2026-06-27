@@ -1,7 +1,7 @@
 export const TILE_COUNT = 9;
 
 export function rotateTileLeft(rotations, index) {
-  if (!Number.isInteger(index) || index < 0 || index >= TILE_COUNT) {
+  if (!Number.isInteger(index) || index < 0 || index >= rotations.length) {
     return rotations;
   }
 
