@@ -18,6 +18,7 @@ export default function BouquetRotationPuzzle({
   const [rotations, setRotations] = useState(() => createInitialRotations());
   const [hasAdvanced, setHasAdvanced] = useState(false);
   const hasReportedSolved = useRef(false);
+  const hasAdvancedRef = useRef(false);
   const solved = isPuzzleSolved(rotations);
 
   useEffect(() => {
@@ -38,56 +39,66 @@ export default function BouquetRotationPuzzle({
   };
 
   const handleAdvance = () => {
-    if (!solved || hasAdvanced) {
+    if (!solved || hasAdvancedRef.current) {
       return;
     }
 
+    hasAdvancedRef.current = true;
     setHasAdvanced(true);
     onAdvance?.();
   };
 
   return (
     <section className={`bouquet-puzzle${solved ? ' is-solved' : ''}`}>
-      <p aria-live="polite">{solved ? SOLVED_TEXT : STATUS_TEXT}</p>
+      <p className="bouquet-puzzle-status" aria-live="polite">
+        {solved ? SOLVED_TEXT : STATUS_TEXT}
+      </p>
 
-      <div role="group" aria-label="3乘3生日花束旋转拼图">
-        {rotations.map((rotation, index) => {
-          const row = Math.floor(index / GRID_SIZE);
-          const column = index % GRID_SIZE;
-
-          return (
-            <button
-              key={index}
-              type="button"
-              aria-label={`第${row + 1}行第${column + 1}列，向左旋转 90 度`}
-              disabled={solved}
-              onClick={() => handleRotate(index)}
-            >
-              <span
-                aria-hidden="true"
-                className="bouquet-puzzle-image"
-                style={{
-                  backgroundImage: `url(${imageSrc})`,
-                  backgroundPosition: `${column * 50}% ${row * 50}%`,
-                  transform: `rotate(${rotation * 90}deg)`,
-                }}
-              />
-            </button>
-          );
-        })}
-      </div>
-
-      {solved ? (
-        <button
-          type="button"
-          className="bouquet-puzzle-advance"
-          aria-label="拼好了，进入下一关"
-          disabled={hasAdvanced}
-          onClick={handleAdvance}
+      <div className="bouquet-puzzle-frame">
+        <div
+          className="bouquet-puzzle-grid"
+          role="group"
+          aria-label="3乘3生日花束旋转拼图"
         >
-          <span>进入下一关</span>
-        </button>
-      ) : null}
+          {rotations.map((rotation, index) => {
+            const row = Math.floor(index / GRID_SIZE);
+            const column = index % GRID_SIZE;
+
+            return (
+              <button
+                key={index}
+                type="button"
+                className="bouquet-puzzle-tile"
+                aria-label={`第${row + 1}行第${column + 1}列，向左旋转 90 度`}
+                disabled={solved}
+                onClick={() => handleRotate(index)}
+              >
+                <span
+                  aria-hidden="true"
+                  className="bouquet-puzzle-image"
+                  style={{
+                    backgroundImage: `url(${imageSrc})`,
+                    backgroundPosition: `${column * 50}% ${row * 50}%`,
+                    transform: `rotate(${rotation * 90}deg)`,
+                  }}
+                />
+              </button>
+            );
+          })}
+        </div>
+
+        {solved ? (
+          <button
+            type="button"
+            className="bouquet-puzzle-advance"
+            aria-label="拼好了，进入下一关"
+            disabled={hasAdvanced}
+            onClick={handleAdvance}
+          >
+            <span>进入下一关</span>
+          </button>
+        ) : null}
+      </div>
     </section>
   );
 }

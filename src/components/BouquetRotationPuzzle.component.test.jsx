@@ -1,4 +1,4 @@
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { act, cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import BouquetRotationPuzzle from './BouquetRotationPuzzle.jsx';
@@ -31,15 +31,23 @@ describe('BouquetRotationPuzzle', () => {
   it('renders nine tile buttons with row-column labels and expected crop styles', () => {
     renderPuzzle();
 
+    const root = document.querySelector('.bouquet-puzzle');
+    const status = screen.getByText('继续旋转拼好花束');
+    const frame = root?.querySelector('.bouquet-puzzle-frame');
     const board = screen.getByRole('group', { name: '3乘3生日花束旋转拼图' });
     const tileButtons = within(board).getAllByRole('button');
 
+    expect(status.className).toBe('bouquet-puzzle-status');
+    expect(frame).not.toBeNull();
+    expect(board.className).toBe('bouquet-puzzle-grid');
     expect(tileButtons).toHaveLength(9);
 
     tileButtons.forEach((button, index) => {
       const row = Math.floor(index / 3) + 1;
       const column = (index % 3) + 1;
       expect(button.getAttribute('aria-label')).toBe(`第${row}行第${column}列，向左旋转 90 度`);
+      expect(button.className).toBe('bouquet-puzzle-tile');
+      expect(button.parentElement).toBe(board);
     });
 
     const firstTileImage = tileButtons[0].querySelector('.bouquet-puzzle-image');
@@ -72,8 +80,10 @@ describe('BouquetRotationPuzzle', () => {
 
     await user.click(screen.getByRole('button', { name: '第1行第1列，向左旋转 90 度' }));
 
+    const frame = document.querySelector('.bouquet-puzzle-frame');
     const advanceButton = screen.getByRole('button', { name: '拼好了，进入下一关' });
 
+    expect(frame?.contains(advanceButton)).toBe(true);
     expect(advanceButton.disabled).toBe(false);
     expect(within(advanceButton).getByText('进入下一关')).not.toBeNull();
 
@@ -82,6 +92,22 @@ describe('BouquetRotationPuzzle', () => {
 
     expect(onAdvance).toHaveBeenCalledTimes(1);
     expect(advanceButton.disabled).toBe(true);
+  });
+
+  it('latches repeated synchronous clicks on the solved advance button', async () => {
+    const user = userEvent.setup();
+    const { onAdvance } = renderPuzzle();
+
+    await user.click(screen.getByRole('button', { name: '第1行第1列，向左旋转 90 度' }));
+
+    const advanceButton = screen.getByRole('button', { name: '拼好了，进入下一关' });
+
+    act(() => {
+      advanceButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      advanceButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+
+    expect(onAdvance).toHaveBeenCalledTimes(1);
   });
 
   it('allows solving from the focused first button with the Enter key and reports solved once', async () => {
