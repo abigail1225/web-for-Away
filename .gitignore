@@ -3,3 +3,5 @@ dist/
 .pnpm-home/
 .DS_Store
 *.log
+.superpowers/
+.worktrees/
