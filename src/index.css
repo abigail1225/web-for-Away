@@ -2922,7 +2922,7 @@
   .bouquet-puzzle-tile:focus-visible,
   .bouquet-puzzle-advance:focus-visible {
     z-index: 3;
-    outline: 3px solid #78b8f4;
+    outline: 3px solid #2f6f9f;
     outline-offset: -3px;
   }
 
@@ -2933,8 +2933,6 @@
     background-color: #fff6f1;
     background-repeat: no-repeat;
     background-size: 300% 300%;
-    transition: transform .26s ease;
-    will-change: transform;
   }
 
   .bouquet-puzzle.is-solved .bouquet-puzzle-frame {
