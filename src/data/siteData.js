@@ -15,11 +15,12 @@ export const openingLetter = {
 export const gameLevels = [
   {
     id: 'level-01',
-    type: 'password',
-    title: 'Level 01：生日暗号',
-    description: '把我们都知道的那个日期变成四位数字，打开第一只小盒子。',
-    hint: '提示：比如 5 月 20 日可以写成 0520。',
-    answers: ['0520'],
+    kind: 'rotation-puzzle',
+    type: '旋转拼图',
+    title: 'Level 01：生日花束',
+    description: '把每一块花束转回正确方向，拼好今天的第一份生日惊喜。',
+    hint: '每次点击都会向左旋转 90 度。',
+    answers: [],
     gift: '礼物 1 已解锁：请领取第一份小惊喜。',
   },
   {

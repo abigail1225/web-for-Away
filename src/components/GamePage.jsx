@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
-import { gameLevels } from '../data/siteData.js';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { assetPath, gameLevels } from '../data/siteData.js';
+import BouquetRotationPuzzle from './BouquetRotationPuzzle.jsx';
 import Modal from './Modal.jsx';
 import SectionTitle from './SectionTitle.jsx';
 
@@ -27,6 +28,10 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(solved));
   }, [solved]);
+
+  const markCurrentLevelSolved = useCallback(() => {
+    setSolved((current) => (current[level.id] ? current : { ...current, [level.id]: true }));
+  }, [level.id]);
 
   const submitAnswer = (event) => {
     event.preventDefault();
@@ -92,24 +97,34 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
               {level.hint}
             </p>
 
-            <form onSubmit={submitAnswer} className="mt-6 space-y-4">
-              <label className="block text-sm font-black text-birthday-ink" htmlFor="puzzle-answer">
-                输入你的答案
-              </label>
-              <input
-                id="puzzle-answer"
-                value={answer}
-                onChange={(event) => setAnswer(event.target.value)}
-                className="w-full rounded-2xl border-2 border-[#f3c985] bg-white/90 px-4 py-3 text-birthday-ink outline-none transition focus:border-birthday-roseDeep focus:ring-4 focus:ring-birthday-rose/20"
-                placeholder="答案不会区分大小写和空格"
-              />
-              <div className="flex flex-wrap items-center gap-3">
-                <button type="submit" className="btn btn-rose">
-                  提交答案
-                </button>
-                {message ? <span className="text-sm font-bold text-birthday-muted">{message}</span> : null}
+            {level.kind === 'rotation-puzzle' ? (
+              <div className="mt-6">
+                <BouquetRotationPuzzle
+                  imageSrc={assetPath('puzzle/birthday-bouquet.jpg')}
+                  onSolved={markCurrentLevelSolved}
+                  onAdvance={goNext}
+                />
               </div>
-            </form>
+            ) : (
+              <form onSubmit={submitAnswer} className="mt-6 space-y-4">
+                <label className="block text-sm font-black text-birthday-ink" htmlFor="puzzle-answer">
+                  输入你的答案
+                </label>
+                <input
+                  id="puzzle-answer"
+                  value={answer}
+                  onChange={(event) => setAnswer(event.target.value)}
+                  className="w-full rounded-2xl border-2 border-[#f3c985] bg-white/90 px-4 py-3 text-birthday-ink outline-none transition focus:border-birthday-roseDeep focus:ring-4 focus:ring-birthday-rose/20"
+                  placeholder="答案不会区分大小写和空格"
+                />
+                <div className="flex flex-wrap items-center gap-3">
+                  <button type="submit" className="btn btn-rose">
+                    提交答案
+                  </button>
+                  {message ? <span className="text-sm font-bold text-birthday-muted">{message}</span> : null}
+                </div>
+              </form>
+            )}
           </article>
 
           <aside className="rounded-[28px] border border-white/80 bg-white/60 p-5 shadow-soft md:p-7">
