@@ -2975,6 +2975,301 @@
     white-space: nowrap;
   }
 
+  .crossword-puzzle {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(143, 94, 48, .18);
+    border-radius: 8px;
+    background:
+      linear-gradient(90deg, rgba(122,67,36,.035) 1px, transparent 1px) 0 0 / 22px 22px,
+      linear-gradient(rgba(122,67,36,.026) 1px, transparent 1px) 0 0 / 22px 22px,
+      radial-gradient(circle at 18% 10%, rgba(255, 230, 161, .32), transparent 32%),
+      #fff9e8;
+    padding: clamp(16px, 4vw, 28px);
+    box-shadow: 0 18px 36px rgba(128, 82, 35, .12), inset 0 0 0 1px rgba(255,255,255,.62);
+  }
+
+  .crossword-puzzle::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    pointer-events: none;
+    border: 1px dashed rgba(143, 94, 48, .2);
+    border-radius: 7px;
+  }
+
+  .crossword-header {
+    position: relative;
+    display: grid;
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .crossword-header p {
+    margin: 0;
+    color: #9b5870;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .crossword-header h3 {
+    margin: 0;
+    color: #5f3a20;
+    font-family: Georgia, "Times New Roman", "Songti SC", serif;
+    font-size: clamp(25px, 4vw, 38px);
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  .crossword-header span {
+    color: #7f6654;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .crossword-layout {
+    position: relative;
+    display: grid;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .crossword-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--crossword-size), minmax(0, 1fr));
+    width: min(100%, 500px);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    border: 3px solid #5f3a20;
+    background: #5f3a20;
+    box-shadow: 0 14px 28px rgba(95, 58, 32, .16);
+  }
+
+  .crossword-cell {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    border: 1px solid #5f3a20;
+    padding: 0;
+    aspect-ratio: 1;
+  }
+
+  .crossword-cell-black {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.07), transparent 42%),
+      #4a2d1a;
+  }
+
+  .crossword-cell-input {
+    display: grid;
+    place-items: center;
+    background: rgba(255, 253, 244, .96);
+    color: #4a2d1a;
+    cursor: pointer;
+    transition: background .16s ease, box-shadow .16s ease, transform .16s ease;
+  }
+
+  .crossword-cell-input:hover,
+  .crossword-cell-input.is-active {
+    z-index: 1;
+    background: #fff0c7;
+    box-shadow: inset 0 0 0 3px rgba(186, 123, 70, .42);
+  }
+
+  .crossword-cell-input.is-incorrect {
+    background: #ffe1e2;
+    box-shadow: inset 0 0 0 3px rgba(242, 109, 125, .55);
+  }
+
+  .crossword-cell-input.is-hidden-answer {
+    z-index: 2;
+    background: #f3e7ff;
+    box-shadow: inset 0 0 0 3px rgba(157, 112, 179, .72), 0 0 18px rgba(157, 112, 179, .5);
+    animation: crosswordGlow 1.25s ease-in-out infinite alternate;
+  }
+
+  .crossword-cell-input:focus-visible {
+    z-index: 3;
+    outline: 3px solid #2f6f9f;
+    outline-offset: -4px;
+  }
+
+  .crossword-cell-number {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    color: #7f6654;
+    font-size: clamp(8px, 1.8vw, 11px);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .crossword-cell-letter {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(18px, 5vw, 34px);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .crossword-clues {
+    display: grid;
+    gap: 14px;
+  }
+
+  .crossword-clue-list {
+    border-left: 3px double rgba(143, 94, 48, .32);
+    padding-left: 14px;
+  }
+
+  .crossword-clue-list h4 {
+    margin: 0 0 8px;
+    color: #7a4324;
+    font-family: Georgia, "Times New Roman", "Songti SC", serif;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .crossword-clue-list ol {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .crossword-clue-list button {
+    display: flex;
+    width: 100%;
+    gap: 9px;
+    align-items: flex-start;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(255,255,255,.42);
+    padding: 8px 10px;
+    color: #66503f;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.45;
+    text-align: left;
+    cursor: pointer;
+    transition: background .16s ease, transform .16s ease;
+  }
+
+  .crossword-clue-list button:hover,
+  .crossword-clue-list button:focus-visible,
+  .crossword-clue-list.is-active button:hover {
+    background: rgba(245, 213, 228, .58);
+    transform: translateX(2px);
+  }
+
+  .crossword-clue-list button span {
+    display: inline-grid;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    place-items: center;
+    border-radius: 999px;
+    background: #fff0c7;
+    color: #7a4324;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .crossword-actions {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-top: 18px;
+  }
+
+  .crossword-actions span {
+    color: #9b5870;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .crossword-completion {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.68);
+    padding: 16px;
+    color: #5f3a20;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.82);
+    animation: fadeUp .28s ease both;
+  }
+
+  .crossword-completion::after {
+    content: "✦";
+    position: absolute;
+    top: -14px;
+    right: 18px;
+    color: #d58ca6;
+    font-size: 26px;
+    animation: crosswordPetalSpark .9s ease-in-out infinite alternate;
+  }
+
+  .crossword-completion p,
+  .crossword-completion h4 {
+    margin: 0;
+  }
+
+  .crossword-completion h4 {
+    color: #9b5870;
+    font-family: Georgia, "Times New Roman", "Songti SC", serif;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .crossword-hidden-answer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: baseline;
+  }
+
+  .crossword-hidden-answer span {
+    color: #7f6654;
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .crossword-hidden-answer strong {
+    color: #7a4324;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(30px, 8vw, 52px);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  @media (min-width: 900px) {
+    .crossword-layout {
+      grid-template-columns: minmax(360px, 500px) minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .crossword-puzzle {
+      padding: 14px;
+    }
+
+    .crossword-grid {
+      border-width: 2px;
+    }
+
+    .crossword-cell {
+      border-width: 1px;
+    }
+  }
+
   .photo-card {
     display: block;
     overflow: hidden;
@@ -3981,6 +4276,28 @@
   100% {
     transform: translateY(-2px);
     box-shadow: 0 24px 58px rgba(128, 82, 35, .16), 0 0 0 1px rgba(242, 109, 125, .22), 0 12px 28px rgba(242, 109, 125, .22);
+  }
+}
+
+@keyframes crosswordGlow {
+  0% {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+  100% {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+  }
+}
+
+@keyframes crosswordPetalSpark {
+  0% {
+    opacity: .56;
+    transform: translateY(3px) rotate(-8deg) scale(.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-2px) rotate(8deg) scale(1.08);
   }
 }
 

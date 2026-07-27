@@ -51,7 +51,7 @@ describe('GamePage', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('heading', { level: 3, name: 'Level 02：下一站填词' }),
+        screen.getByRole('heading', { level: 3, name: 'Level 02：Crossword Puzzle · Hidden Message' }),
       ).not.toBeNull();
     });
 
@@ -67,7 +67,7 @@ describe('GamePage', () => {
     ).not.toBeNull();
   });
 
-  it('keeps the level two and level three modal flow after the bouquet puzzle', async () => {
+  it('keeps the crossword level two and level three modal flow after the bouquet puzzle', async () => {
     const user = userEvent.setup();
 
     render(<GamePage />);
@@ -77,17 +77,38 @@ describe('GamePage', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('heading', { level: 3, name: 'Level 02：下一站填词' }),
+        screen.getByRole('heading', { level: 3, name: 'Level 02：Crossword Puzzle · Hidden Message' }),
       ).not.toBeNull();
     });
 
-    await user.type(screen.getByLabelText('输入你的答案'), '海边');
-    await user.click(screen.getByRole('button', { name: '提交答案' }));
+    await user.click(screen.getByLabelText('Row 1 column 1'));
+    await user.keyboard('CLASS');
+    await user.click(screen.getByLabelText('Row 1 column 7'));
+    await user.keyboard('MAP');
+    await user.click(screen.getByLabelText('Row 2 column 1'));
+    await user.keyboard('A');
+    await user.click(screen.getByLabelText('Row 3 column 1'));
+    await user.keyboard('TEA');
+    await user.click(screen.getByLabelText('Row 3 column 5'));
+    await user.keyboard('DESK');
+    await user.click(screen.getByLabelText('Row 5 column 3'));
+    await user.keyboard('LAMP');
+    await user.click(screen.getByLabelText('Row 5 column 4'));
+    await user.keyboard('EAST');
+    await user.click(screen.getByLabelText('Row 5 column 5'));
+    await user.keyboard('NOTE');
+    await user.click(screen.getByLabelText('Row 5 column 6'));
+    await user.keyboard('STAR');
+    await user.click(screen.getByLabelText('Row 9 column 1'));
+    await user.keyboard('PLANE');
+    await user.click(screen.getByLabelText('Row 9 column 7'));
+    await user.keyboard('BUS');
+    await user.click(screen.getByRole('button', { name: 'Check Answer' }));
 
-    expect(screen.getByRole('dialog')).not.toBeNull();
-    expect(screen.getByRole('heading', { level: 3, name: '聪明如你' })).not.toBeNull();
+    expect(await screen.findByText('You found the hidden message.')).not.toBeNull();
+    expect(screen.getByText('Lens')).not.toBeNull();
 
-    await user.click(screen.getByRole('button', { name: '进入下一关' }));
+    await user.click(screen.getByRole('button', { name: 'Continue Puzzle Time' }));
 
     await waitFor(() => {
       expect(

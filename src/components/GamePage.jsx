@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { crosswordData } from '../data/crosswordData.js';
 import { assetPath, gameLevels } from '../data/siteData.js';
 import BouquetRotationPuzzle from './BouquetRotationPuzzle.jsx';
+import CrosswordPuzzle from './CrosswordPuzzle.jsx';
 import Modal from './Modal.jsx';
 import SectionTitle from './SectionTitle.jsx';
 
@@ -104,6 +106,10 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
                   onSolved={markCurrentLevelSolved}
                   onAdvance={goNext}
                 />
+              </div>
+            ) : level.kind === 'crossword' ? (
+              <div className="mt-6">
+                <CrosswordPuzzle data={crosswordData} onSolved={markCurrentLevelSolved} onAdvance={goNext} />
               </div>
             ) : (
               <form onSubmit={submitAnswer} className="mt-6 space-y-4">
