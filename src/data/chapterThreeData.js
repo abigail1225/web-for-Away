@@ -1,7 +1,7 @@
 export const chapterThreeData = {
   id: 'journey-ahead',
   title: 'The Journey Ahead',
-  intro: 'Find four small clues, then reveal the final surprise.',
+  intro: 'Find four small clues, then continue to the final page.',
   storageKey: 'birthday-puzzle-chapter-3',
   assets: {
     album: 'images/puzzle/chapter3/album.png',
@@ -89,7 +89,7 @@ export const chapterThreeData = {
       '也希望在许多未来的日子里，',
       '我仍然可以陪你一起向前。',
     ],
-    claimButton: '揭开最后的惊喜',
+    claimButton: '继续前往下一步',
     claimTitle: '最后一页已经为你打开。',
     confirmButton: '我看到了',
     completedTitle: 'Puzzle Time Completed',

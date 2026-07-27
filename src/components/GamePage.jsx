@@ -69,7 +69,7 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
     <section id="games" className="section-shell">
       <div className="section-container">
         <SectionTitle eyebrow="SECRET LEVEL" title="Puzzle Time">
-          解开一点点默契，找到藏起来的小惊喜。
+          解开一点点默契，顺着线索继续往前。
         </SectionTitle>
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)]">
@@ -139,9 +139,9 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
           </article>
 
           <aside className="rounded-[28px] border border-white/80 bg-white/60 p-5 shadow-soft md:p-7">
-            <h3 className="font-display text-2xl font-bold text-[#7a4324]">惊喜进度</h3>
+            <h3 className="font-display text-2xl font-bold text-[#7a4324]">解谜进度</h3>
             <p className="mt-2 text-sm leading-7 text-birthday-muted">
-              解开 {solvedCount} / {gameLevels.length} 道谜题。保持一点神秘感，新的线索会在破解后出现。
+              完成 {solvedCount} / {gameLevels.length} 道谜题。下一道线索会在破解后出现。
             </p>
             <div className="mt-5 space-y-3">
               {gameLevels.map((item, index) => (

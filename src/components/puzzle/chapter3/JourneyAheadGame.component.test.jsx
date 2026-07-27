@@ -79,7 +79,7 @@ describe('JourneyAheadGame', () => {
     expect(await screen.findByText("For all the roads you haven't walked yet.")).not.toBeNull();
     expect(onSolved).toHaveBeenCalledTimes(1);
 
-    await user.click(screen.getByRole('button', { name: '揭开最后的惊喜' }));
+    await user.click(screen.getByRole('button', { name: '继续前往下一步' }));
     expect(screen.getByRole('dialog')).not.toBeNull();
     await user.click(screen.getByRole('button', { name: '我看到了' }));
 

@@ -8,7 +8,7 @@ export const openingLetter = {
   title: 'Happy Birthday',
   subtitle: '这是一张进入生日小屋的邀请函。',
   body:
-    '今天不是让你完成任务的一天。只是我把这一年里想说的话，藏进了几个小房间。你可以抽一张牌，看看今天的祝福；也可以猜猜那些陪我们走过的人；还可以解开几个小谜题，找到藏起来的小惊喜。最后，如果你愿意，来信箱里读一读我真正想告诉你的事。',
+    '今天不是让你完成任务的一天。只是我把这一年里想说的话，藏进了几个小房间。你可以抽一张牌，看看今天的祝福；也可以猜猜那些陪我们走过的人；还可以解开几个小谜题，找到藏起来的小线索。最后，如果你愿意，来信箱里读一读我真正想告诉你的事。',
   audio: 'birthday-song.mp3',
 };
 
@@ -17,11 +17,11 @@ export const gameLevels = [
     id: 'level-01',
     kind: 'rotation-puzzle',
     type: '旋转拼图',
-    title: 'Level 01：生日花束',
-    description: '把每一块花束转回正确方向，拼好今天的第一道生日谜题。',
+    title: 'Level 01：花束旋转拼图',
+    description: '把每一块花束转回正确方向，完成第一道拼图。',
     hint: '每次点击都会向左旋转 90 度。',
     answers: [],
-    reveal: '第一枚惊喜印记已经点亮。',
+    reveal: '第一道谜题已经完成。',
   },
   {
     id: 'level-02',
@@ -38,10 +38,10 @@ export const gameLevels = [
     kind: 'journey-ahead',
     type: '探索解谜',
     title: 'Level 03：The Journey Ahead',
-    description: '进入一个温暖的小房间，找到四枚线索印记，揭开最后的惊喜。',
+    description: '进入一个温暖的小房间，找到四枚线索印记，完成最后一关。',
     hint: '提示：按相册、地图、信件、脚印的顺序，一步一步解开。',
     answers: [],
-    reveal: '最后的惊喜已经为你点亮。',
+    reveal: '所有谜题已经完成。',
   },
 ];
 
