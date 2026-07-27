@@ -21,7 +21,7 @@ async function completeMemory(user) {
 async function completeRoad(user) {
   await user.click(screen.getByRole('button', { name: /Route Map/ }));
   expect(screen.getByText('点击旋转路线碎片，让小路从 START 连到 GOAL。')).not.toBeNull();
-  expect(screen.getByText('目标：每一块都转成横线，红点接金点。')).not.toBeNull();
+  expect(screen.getByText('正确方向：红点在左，金点在右。完成后会自动解锁。')).not.toBeNull();
   expect(screen.getByLabelText('Faint route guide from start to goal')).not.toBeNull();
   const route = screen.getByRole('group', { name: 'Rotate route tiles' });
   const tiles = within(route).getAllByRole('button');
