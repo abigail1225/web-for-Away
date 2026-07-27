@@ -4,6 +4,7 @@ import { assetPath, gameLevels } from '../data/siteData.js';
 import BouquetRotationPuzzle from './BouquetRotationPuzzle.jsx';
 import CrosswordPuzzle from './CrosswordPuzzle.jsx';
 import Modal from './Modal.jsx';
+import JourneyAheadGame from './puzzle/chapter3/JourneyAheadGame.jsx';
 import SectionTitle from './SectionTitle.jsx';
 
 const storageKey = 'birthday-puzzle-solved';
@@ -110,6 +111,10 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
             ) : level.kind === 'crossword' ? (
               <div className="mt-6">
                 <CrosswordPuzzle data={crosswordData} onSolved={markCurrentLevelSolved} onAdvance={goNext} />
+              </div>
+            ) : level.kind === 'journey-ahead' ? (
+              <div className="mt-6">
+                <JourneyAheadGame onSolved={markCurrentLevelSolved} onAdvance={goNext} />
               </div>
             ) : (
               <form onSubmit={submitAnswer} className="mt-6 space-y-4">

@@ -35,12 +35,13 @@ export const gameLevels = [
   },
   {
     id: 'level-03',
-    type: 'password',
-    title: 'Level 03：最终昵称',
-    description: '输入我最常叫你的那个昵称，领取今天最大的一份喜欢。',
-    hint: '提示：两个字，听起来很黏糊。',
-    answers: ['宝宝', '宝贝'],
-    gift: '最终礼物已解锁：请领取今天最大的一份喜欢。',
+    kind: 'journey-ahead',
+    type: '探索解谜',
+    title: 'Level 03：The Journey Ahead',
+    description: '进入一个温暖的小房间，找到四枚线索印记，打开最后的礼盒。',
+    hint: '提示：按相册、地图、信件、脚印的顺序，一步一步解开。',
+    answers: [],
+    gift: '最终礼物已解锁：愿这双鞋陪你走向未来的每一段路。',
   },
 ];
 

@@ -37,6 +37,41 @@ async function solveLevelOne(user) {
   return screen.findByRole('button', { name: '拼好了，进入下一关' });
 }
 
+async function solveLevelThree(user) {
+  await user.click(screen.getByRole('button', { name: /Memory Album/ }));
+  await user.click(screen.getByRole('button', { name: /2024.06/ }));
+  await user.click(screen.getByRole('button', { name: /2025.01/ }));
+  await user.click(screen.getByRole('button', { name: /2025.10/ }));
+  await user.click(screen.getByRole('button', { name: 'Close clue' }));
+
+  await user.click(screen.getByRole('button', { name: /Route Map/ }));
+  const route = screen.getByRole('group', { name: 'Rotate route tiles' });
+  const tiles = within(route).getAllByRole('button');
+  await user.click(tiles[0]);
+  await user.click(tiles[1]);
+  await user.click(tiles[2]);
+  await user.click(screen.getByRole('button', { name: 'Close clue' }));
+
+  await user.click(screen.getByRole('button', { name: /Folded Letter/ }));
+  await user.click(screen.getByRole('button', { name: /^S$/ }));
+  await user.click(screen.getByRole('button', { name: /^T$/ }));
+  await user.click(screen.getByRole('button', { name: /^E$/ }));
+  await user.click(screen.getByRole('button', { name: /^P$/ }));
+  await user.click(screen.getByRole('button', { name: 'Close clue' }));
+
+  await user.click(screen.getByRole('button', { name: /Footprints/ }));
+  await user.click(screen.getByRole('button', { name: 'Left footprint' }));
+  await user.click(screen.getByRole('button', { name: 'Right footprint' }));
+  await user.click(screen.getByRole('button', { name: 'Left footprint' }));
+  await user.click(screen.getByRole('button', { name: 'Right footprint' }));
+  await user.click(screen.getByRole('button', { name: 'Close clue' }));
+
+  expect(await screen.findByText("For all the roads you haven't walked yet.")).not.toBeNull();
+  await user.click(screen.getByRole('button', { name: '领取现实礼物' }));
+  await user.click(screen.getByRole('button', { name: '我已经收到礼物' }));
+  await user.click(screen.getByRole('button', { name: 'Continue' }));
+}
+
 describe('GamePage', () => {
   it('persists bouquet completion and restores unlocked progress after a reload', async () => {
     const user = userEvent.setup();
@@ -67,7 +102,7 @@ describe('GamePage', () => {
     ).not.toBeNull();
   });
 
-  it('keeps the crossword level two and level three modal flow after the bouquet puzzle', async () => {
+  it('keeps the crossword level two and journey level three flow after the bouquet puzzle', async () => {
     const user = userEvent.setup();
 
     render(<GamePage />);
@@ -112,20 +147,11 @@ describe('GamePage', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('heading', { level: 3, name: 'Level 03：最终昵称' }),
+        screen.getByRole('heading', { level: 3, name: 'Level 03：The Journey Ahead' }),
       ).not.toBeNull();
     });
 
-    await user.type(screen.getByLabelText('输入你的答案'), '宝宝');
-    await user.click(screen.getByRole('button', { name: '提交答案' }));
-
-    expect(screen.getByRole('dialog')).not.toBeNull();
-    expect(screen.getByRole('heading', { level: 3, name: '聪明如你' })).not.toBeNull();
-
-    const finishButton = screen.getByRole('button', { name: '去照片墙' });
-    expect(finishButton).not.toBeNull();
-
-    await user.click(finishButton);
+    await solveLevelThree(user);
 
     expect(window.location.hash).toBe('#photos');
   });
