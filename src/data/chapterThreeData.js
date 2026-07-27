@@ -70,9 +70,9 @@ export const chapterThreeData = {
     },
   ],
   roadTiles: [
-    { id: 'tile-1', answerRotation: 90, initialRotation: 0 },
+    { id: 'tile-1', answerRotation: 0, initialRotation: 270 },
     { id: 'tile-2', answerRotation: 0, initialRotation: 270 },
-    { id: 'tile-3', answerRotation: 270, initialRotation: 180 },
+    { id: 'tile-3', answerRotation: 0, initialRotation: 270 },
   ],
   letterLines: [
     'Sometimes the road may be longer than expected.',

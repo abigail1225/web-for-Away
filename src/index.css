@@ -3672,6 +3672,23 @@
     box-shadow: inset 0 0 0 1px rgba(255,255,255,.6);
   }
 
+  .journey-route-goal {
+    position: relative;
+    z-index: 2;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    border: 1px solid rgba(157,112,179,.26);
+    border-radius: 999px;
+    background: rgba(255,255,255,.76);
+    padding: 8px 13px;
+    color: #7a4324;
+    font-size: 13px;
+    font-weight: 900;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(95,58,32,.1);
+  }
+
   .journey-route-guide {
     position: absolute;
     inset: 22px;
@@ -3680,17 +3697,17 @@
 
   .journey-route-guide svg {
     position: absolute;
-    inset: 28px 18px 22px;
+    inset: 54px 18px 22px;
     width: calc(100% - 36px);
-    height: calc(100% - 50px);
+    height: calc(100% - 76px);
   }
 
   .journey-route-guide path {
     fill: none;
     stroke: rgba(143,94,48,.24);
-    stroke-dasharray: 10 10;
+    stroke-dasharray: 12 12;
     stroke-linecap: round;
-    stroke-width: 8;
+    stroke-width: 10;
   }
 
   .is-route-solved .journey-route-guide path {
@@ -3713,12 +3730,12 @@
 
   .journey-route-guide .start {
     left: 0;
-    top: 45%;
+    top: 50%;
   }
 
   .journey-route-guide .goal {
     right: 0;
-    top: 38%;
+    top: 50%;
   }
 
   .journey-route {
@@ -3729,7 +3746,7 @@
     gap: clamp(10px, 3vw, 28px);
     align-items: center;
     max-width: 520px;
-    margin: 58px auto 24px;
+    margin: 48px auto 24px;
   }
 
   .journey-route-tile {
@@ -3764,11 +3781,15 @@
     fill: none;
     stroke: #b47e5b;
     stroke-linecap: round;
-    stroke-width: 13;
+    stroke-width: 15;
   }
 
-  .journey-route-tile circle {
-    fill: #9b5870;
+  .journey-route-tile .route-entry {
+    fill: #d85b68;
+  }
+
+  .journey-route-tile .route-exit {
+    fill: #d9a441;
   }
 
   .journey-route-tile span {
