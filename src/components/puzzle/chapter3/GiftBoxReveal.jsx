@@ -12,7 +12,7 @@ export default function GiftBoxReveal({
   return (
     <section className="journey-reveal" aria-live="polite">
       <div className="journey-reveal-art">
-        <ImageWithFallback src={assets.shoes} alt="Shoes gift" />
+        <ImageWithFallback src={assets.shoes} alt="A pair of shoes" />
       </div>
       <div>
         <h4>{claimed ? finalMessage.completedTitle : finalMessage.title}</h4>

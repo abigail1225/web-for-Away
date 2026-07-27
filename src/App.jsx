@@ -61,7 +61,7 @@ export default function App() {
       }
     >
       <p className="leading-8 text-birthday-muted">
-        这封信要留到最后。先把塔罗桌、猜人物、礼物柜和照片墙都看过，再回来打开信箱。
+        这封信要留到最后。先把塔罗桌、猜人物、谜题桌和照片墙都看过，再回来打开信箱。
       </p>
     </Modal>
   );

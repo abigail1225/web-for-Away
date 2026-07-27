@@ -40,7 +40,7 @@ export default function FootprintPuzzle({ clue, onComplete, sequence }) {
             </span>
           ))}
         </div>
-        <span className="journey-mini-gift">Gift</span>
+        <span className="journey-mini-gift">NEXT</span>
       </div>
       <div className="journey-foot-options">
         <button

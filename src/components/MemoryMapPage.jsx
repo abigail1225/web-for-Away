@@ -11,7 +11,7 @@ const rooms = [
   },
   {
     id: 'puzzle',
-    label: '礼物柜：小游戏与现实礼物交互',
+    label: '谜题桌：小游戏与隐藏惊喜',
     className: 'wall-cabinet',
   },
   {

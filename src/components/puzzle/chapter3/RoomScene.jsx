@@ -9,12 +9,12 @@ export default function RoomScene({ activeClue, assets, clues, completedClues, g
   ];
 
   return (
-    <div className="journey-room" aria-label="Warm room with a locked gift box">
+    <div className="journey-room" aria-label="Warm room with a locked surprise box">
       <div className="journey-wall" />
       <div className="journey-floor" />
       <div className={`journey-gift ${giftOpen ? 'is-open' : ''}`}>
-        <ImageWithFallback src={giftOpen ? assets.shoes : assets.giftBox} alt={giftOpen ? 'Open shoe gift' : 'Locked gift box'} />
-        <div className="journey-gift-marks" aria-label="Gift box clue marks">
+        <ImageWithFallback src={giftOpen ? assets.shoes : assets.giftBox} alt={giftOpen ? 'A pair of shoes' : 'Locked surprise box'} />
+        <div className="journey-gift-marks" aria-label="Surprise box clue marks">
           {clues.map((clue) => (
             <span key={clue.id} className={completedClues.includes(clue.id) ? 'is-lit' : ''}>
               {clue.label}

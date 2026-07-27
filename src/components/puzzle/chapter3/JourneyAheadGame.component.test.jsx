@@ -53,7 +53,7 @@ async function completeShoe(user) {
 }
 
 describe('JourneyAheadGame', () => {
-  it('unlocks clues in sequence and finishes after the gift is claimed', async () => {
+  it('unlocks clues in sequence and finishes after the final surprise is revealed', async () => {
     const user = userEvent.setup();
     const onSolved = vi.fn();
     const onAdvance = vi.fn();
@@ -79,9 +79,9 @@ describe('JourneyAheadGame', () => {
     expect(await screen.findByText("For all the roads you haven't walked yet.")).not.toBeNull();
     expect(onSolved).toHaveBeenCalledTimes(1);
 
-    await user.click(screen.getByRole('button', { name: '领取现实礼物' }));
+    await user.click(screen.getByRole('button', { name: '揭开最后的惊喜' }));
     expect(screen.getByRole('dialog')).not.toBeNull();
-    await user.click(screen.getByRole('button', { name: '我已经收到礼物' }));
+    await user.click(screen.getByRole('button', { name: '我看到了' }));
 
     expect(await screen.findByText('Puzzle Time Completed')).not.toBeNull();
     await user.click(screen.getByRole('button', { name: 'Continue' }));

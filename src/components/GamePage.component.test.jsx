@@ -67,8 +67,8 @@ async function solveLevelThree(user) {
   await user.click(screen.getByRole('button', { name: 'Close clue' }));
 
   expect(await screen.findByText("For all the roads you haven't walked yet.")).not.toBeNull();
-  await user.click(screen.getByRole('button', { name: '领取现实礼物' }));
-  await user.click(screen.getByRole('button', { name: '我已经收到礼物' }));
+  await user.click(screen.getByRole('button', { name: '揭开最后的惊喜' }));
+  await user.click(screen.getByRole('button', { name: '我看到了' }));
   await user.click(screen.getByRole('button', { name: 'Continue' }));
 }
 
@@ -96,7 +96,8 @@ describe('GamePage', () => {
     expect(
       screen.getByRole('heading', { level: 3, name: 'Level 01：生日花束' }),
     ).not.toBeNull();
-    expect(screen.getByText(/已解锁 1 \/ 3/)).not.toBeNull();
+    expect(screen.getByText(/解开 1 \/ 3/)).not.toBeNull();
+    expect(screen.getByRole('heading', { level: 3, name: '惊喜进度' })).not.toBeNull();
     expect(
       screen.getByRole('button', { name: 'Level 01：生日花束已解锁' }),
     ).not.toBeNull();
