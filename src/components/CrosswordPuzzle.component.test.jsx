@@ -41,6 +41,9 @@ describe('CrosswordPuzzle', () => {
     const user = userEvent.setup();
     render(<CrosswordPuzzle data={testData} onSolved={vi.fn()} onAdvance={vi.fn()} />);
 
+    expect(screen.getByRole('region', { name: 'Across Clues' })).not.toBeNull();
+    expect(screen.getByText('What grows here.')).not.toBeNull();
+
     await user.click(screen.getByLabelText('Row 1 column 1'));
     await user.keyboard('LOVX');
 

@@ -24,7 +24,10 @@ export default function CluePanel({ activeDirection, onSelectWord, words }) {
 
 function ClueList({ activeDirection, direction, onSelectWord, title, words }) {
   return (
-    <section className={`crossword-clue-list ${activeDirection === direction ? 'is-active' : ''}`}>
+    <section
+      className={`crossword-clue-list ${activeDirection === direction ? 'is-active' : ''}`}
+      aria-label={title}
+    >
       <h4>{title}</h4>
       <ol>
         {words.map((word) => (

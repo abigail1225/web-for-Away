@@ -3117,6 +3117,8 @@
   .crossword-clues {
     display: grid;
     gap: 14px;
+    width: min(100%, 760px);
+    margin: 0 auto;
   }
 
   .crossword-clue-list {
@@ -3250,9 +3252,9 @@
     line-height: 1;
   }
 
-  @media (min-width: 900px) {
-    .crossword-layout {
-      grid-template-columns: minmax(360px, 500px) minmax(0, 1fr);
+  @media (min-width: 640px) {
+    .crossword-clues {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
