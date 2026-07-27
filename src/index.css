@@ -3656,20 +3656,80 @@
     box-shadow: 0 0 18px rgba(157,112,179,.24);
   }
 
-  .journey-route {
-    display: grid;
-    grid-template-columns: auto repeat(3, minmax(74px, 1fr)) auto;
-    gap: 10px;
-    align-items: center;
+  .journey-route-map {
+    position: relative;
+    overflow: hidden;
+    min-height: 260px;
+    border: 1px solid rgba(143,94,48,.2);
+    border-radius: 8px;
+    background:
+      radial-gradient(circle at 18% 24%, rgba(177,201,219,.22), transparent 20%),
+      radial-gradient(circle at 78% 28%, rgba(214,182,211,.2), transparent 22%),
+      linear-gradient(90deg, rgba(122,67,36,.06) 1px, transparent 1px) 0 0 / 72px 72px,
+      linear-gradient(rgba(122,67,36,.045) 1px, transparent 1px) 0 0 / 72px 72px,
+      #fff8df;
+    padding: 24px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.6);
   }
 
-  .journey-route > span {
+  .journey-route-guide {
+    position: absolute;
+    inset: 22px;
+    pointer-events: none;
+  }
+
+  .journey-route-guide svg {
+    position: absolute;
+    inset: 28px 18px 22px;
+    width: calc(100% - 36px);
+    height: calc(100% - 50px);
+  }
+
+  .journey-route-guide path {
+    fill: none;
+    stroke: rgba(143,94,48,.24);
+    stroke-dasharray: 10 10;
+    stroke-linecap: round;
+    stroke-width: 8;
+  }
+
+  .is-route-solved .journey-route-guide path {
+    stroke: rgba(157,112,179,.72);
+    filter: drop-shadow(0 0 10px rgba(157,112,179,.38));
+  }
+
+  .journey-route-guide .start,
+  .journey-route-guide .goal {
+    position: absolute;
+    z-index: 2;
     border-radius: 999px;
     background: #fff0c7;
-    padding: 8px 10px;
+    padding: 8px 11px;
     color: #7a4324;
     font-size: 12px;
     font-weight: 900;
+    box-shadow: 0 8px 16px rgba(95,58,32,.12);
+  }
+
+  .journey-route-guide .start {
+    left: 0;
+    top: 45%;
+  }
+
+  .journey-route-guide .goal {
+    right: 0;
+    top: 38%;
+  }
+
+  .journey-route {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(74px, 1fr));
+    gap: clamp(10px, 3vw, 28px);
+    align-items: center;
+    max-width: 520px;
+    margin: 58px auto 24px;
   }
 
   .journey-route-tile {
@@ -3678,22 +3738,56 @@
     place-items: center;
     border: 2px solid rgba(143,94,48,.32);
     border-radius: 8px;
-    background: #fffdf4;
-    transition: transform .18s ease, box-shadow .18s ease;
+    background:
+      radial-gradient(circle at 24% 20%, rgba(255,255,255,.72), transparent 26%),
+      #fffdf4;
+    color: #7a4324;
+    box-shadow: 0 12px 24px rgba(95,58,32,.12);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
 
-  .journey-route-tile span {
-    display: block;
+  .journey-route-tile:hover,
+  .journey-route-tile:focus-visible {
+    border-color: rgba(157,112,179,.58);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(95,58,32,.14);
+  }
+
+  .journey-route-tile svg {
     width: 78%;
-    height: 18px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #e0b679, #b47e5b);
+    height: 78%;
     transform: rotate(var(--route-rotation));
     transition: transform .18s ease;
   }
 
+  .journey-route-tile path {
+    fill: none;
+    stroke: #b47e5b;
+    stroke-linecap: round;
+    stroke-width: 13;
+  }
+
+  .journey-route-tile circle {
+    fill: #9b5870;
+  }
+
+  .journey-route-tile span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
   .is-route-solved .journey-route-tile {
-    box-shadow: 0 0 18px rgba(157,112,179,.3);
+    border-color: rgba(157,112,179,.62);
+    background: #f8efff;
+    box-shadow: 0 0 18px rgba(157,112,179,.32);
+  }
+
+  .is-route-solved .journey-route-tile path {
+    stroke: #9b5870;
   }
 
   .journey-letter-paper {
@@ -3935,12 +4029,14 @@
       grid-template-columns: 1fr;
     }
 
-    .journey-route {
-      grid-template-columns: 1fr;
+    .journey-route-map {
+      min-height: 230px;
+      padding: 16px;
     }
 
-    .journey-route > span {
-      justify-self: center;
+    .journey-route {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 64px;
     }
 
     .journey-footpath {
