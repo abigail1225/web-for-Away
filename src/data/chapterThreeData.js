@@ -52,19 +52,19 @@ export const chapterThreeData = {
   memoryPhotos: [
     {
       id: 'memory-1',
-      date: '2024.06',
+      date: '2025年6月11日',
       title: 'First bright stop',
       image: 'images/puzzle/chapter3/memory-1.jpg',
     },
     {
       id: 'memory-2',
-      date: '2025.01',
+      date: '2026年2月14日',
       title: 'A winter note',
       image: 'images/puzzle/chapter3/memory-2.jpg',
     },
     {
       id: 'memory-3',
-      date: '2025.10',
+      date: '2026年5月17日',
       title: 'Somewhere still glowing',
       image: 'images/puzzle/chapter3/memory-3.jpg',
     },

@@ -39,9 +39,9 @@ async function solveLevelOne(user) {
 
 async function solveLevelThree(user) {
   await user.click(screen.getByRole('button', { name: /Memory Album/ }));
-  await user.click(screen.getByRole('button', { name: /2024.06/ }));
-  await user.click(screen.getByRole('button', { name: /2025.01/ }));
-  await user.click(screen.getByRole('button', { name: /2025.10/ }));
+  await user.click(screen.getByRole('button', { name: /2025年6月11日/ }));
+  await user.click(screen.getByRole('button', { name: /2026年2月14日/ }));
+  await user.click(screen.getByRole('button', { name: /2026年5月17日/ }));
   await user.click(screen.getByRole('button', { name: 'Close clue' }));
 
   await user.click(screen.getByRole('button', { name: /Route Map/ }));
