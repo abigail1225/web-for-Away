@@ -78,7 +78,7 @@ describe('GamePage', () => {
     const { unmount } = render(<GamePage />);
 
     expect(
-      screen.getByRole('heading', { level: 3, name: 'Level 01：花束旋转拼图' }),
+      screen.getByRole('heading', { level: 3, name: 'Level 01：旋转拼图' }),
     ).not.toBeNull();
 
     const completedFrame = await solveLevelOne(user);
@@ -94,12 +94,12 @@ describe('GamePage', () => {
     render(<GamePage />);
 
     expect(
-      screen.getByRole('heading', { level: 3, name: 'Level 01：花束旋转拼图' }),
+      screen.getByRole('heading', { level: 3, name: 'Level 01：旋转拼图' }),
     ).not.toBeNull();
     expect(screen.getByText(/完成 1 \/ 3/)).not.toBeNull();
     expect(screen.getByRole('heading', { level: 3, name: '解谜进度' })).not.toBeNull();
     expect(
-      screen.getByRole('button', { name: 'Level 01：花束旋转拼图已解锁' }),
+      screen.getByRole('button', { name: 'Level 01：旋转拼图已解锁' }),
     ).not.toBeNull();
   });
 
