@@ -53,6 +53,7 @@ export default function PhotoWallPage() {
     setSpotlightFailed(false);
     setSelectedPhoto(photo);
   };
+  const selectedNoteLines = selectedPhoto?.note ? selectedPhoto.note.split('\n') : [];
 
   return (
     <section id="photos" className="section-shell">
@@ -101,21 +102,31 @@ export default function PhotoWallPage() {
         }
       >
         {selectedPhoto ? (
-          <div className="photo-spotlight">
-            {!spotlightFailed ? (
-              <img
-                src={assetPath(selectedPhoto.src)}
-                alt={selectedPhoto.caption}
-                onError={() => setSpotlightFailed(true)}
-              />
-            ) : (
-              <div className="photo-spotlight-placeholder">
-                <span>✦</span>
-                <strong>{selectedPhoto.caption}</strong>
-                <small>照片放到对应路径后，这里会显示大图。</small>
+          <div className={`photo-spotlight ${selectedPhoto.note ? 'has-note' : ''}`}>
+            <div className="photo-spotlight-media">
+              {!spotlightFailed ? (
+                <img
+                  src={assetPath(selectedPhoto.src)}
+                  alt={selectedPhoto.caption}
+                  onError={() => setSpotlightFailed(true)}
+                />
+              ) : (
+                <div className="photo-spotlight-placeholder">
+                  <span>✦</span>
+                  <strong>{selectedPhoto.caption}</strong>
+                  <small>照片放到对应路径后，这里会显示大图。</small>
+                </div>
+              )}
+            </div>
+            {selectedPhoto.note ? (
+              <div className="photo-spotlight-note" aria-label="照片文案">
+                {selectedNoteLines.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
               </div>
+            ) : (
+              <p className="photo-spotlight-path">{selectedPhoto.src}</p>
             )}
-            <p>{selectedPhoto.src}</p>
           </div>
         ) : null}
       </Modal>

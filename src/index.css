@@ -4126,16 +4126,35 @@
 
   .photo-spotlight {
     display: grid;
+    max-height: min(74vh, 760px);
     gap: 14px;
+    overflow-y: auto;
+    border: 3px solid transparent;
+    border-radius: 26px;
+    background:
+      linear-gradient(#fffaf0, #fffaf0) padding-box,
+      linear-gradient(135deg, #f26d7d, #f7cf67 32%, #a8d8ff 68%, #b995ef) border-box;
+    padding: 12px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.72);
+    scrollbar-color: rgba(154, 93, 65, .45) rgba(255,255,255,.52);
+  }
+
+  .photo-spotlight-media {
+    overflow: hidden;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff8df, #ddecff);
   }
 
   .photo-spotlight img {
+    display: block;
     width: 100%;
-    max-height: min(68vh, 680px);
+    max-height: min(58vh, 620px);
     object-fit: contain;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #fff8df, #ddecff);
     box-shadow: 0 16px 42px rgba(128, 82, 35, .13);
+  }
+
+  .photo-spotlight.has-note img {
+    max-height: min(46vh, 500px);
   }
 
   .photo-spotlight-placeholder {
@@ -4166,7 +4185,28 @@
     font-weight: 800;
   }
 
-  .photo-spotlight p {
+  .photo-spotlight-note {
+    border-radius: 18px;
+    background:
+      linear-gradient(rgba(255,255,255,.72), rgba(255,255,255,.72)),
+      linear-gradient(135deg, rgba(255,241,194,.92), rgba(221,236,255,.88));
+    padding: 18px 18px 20px;
+    color: #7a4324;
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 2;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.72);
+  }
+
+  .photo-spotlight-note p {
+    margin: 0;
+  }
+
+  .photo-spotlight-note p + p {
+    margin-top: 10px;
+  }
+
+  .photo-spotlight-path {
     margin: 0;
     color: #9a5d41;
     font-size: 12px;
@@ -4176,6 +4216,22 @@
 }
 
 @media (max-width: 520px) {
+  .photo-spotlight {
+    max-height: 70vh;
+    padding: 10px;
+  }
+
+  .photo-spotlight img,
+  .photo-spotlight.has-note img {
+    max-height: 38vh;
+  }
+
+  .photo-spotlight-note {
+    padding: 15px;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
   .fold-envelope {
     width: 340px;
     height: 250px;
