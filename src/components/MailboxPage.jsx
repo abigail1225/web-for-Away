@@ -8,6 +8,7 @@ const replyKey = (letterId) => `birthday-reply-${letterId}`;
 export default function MailboxPage() {
   const [selected, setSelected] = useState(letters[0]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [birthdayPromptOpen, setBirthdayPromptOpen] = useState(false);
   const [reply, setReply] = useState('');
   const [savedText, setSavedText] = useState('');
 
@@ -18,6 +19,11 @@ export default function MailboxPage() {
   }, [selected]);
 
   const openLetter = (letter) => {
+    if (letter.id === 'letter-birthday') {
+      setBirthdayPromptOpen(true);
+      return;
+    }
+
     setSelected(letter);
     setModalOpen(true);
   };
@@ -41,7 +47,9 @@ export default function MailboxPage() {
                 key={letter.id}
                 type="button"
                 onClick={() => openLetter(letter)}
-                className={`mail-card text-left ${selected?.id === letter.id ? 'is-selected' : ''}`}
+                className={`mail-card text-left ${letter.id === 'letter-birthday' ? 'mail-card-birthday' : ''} ${
+                  selected?.id === letter.id ? 'is-selected' : ''
+                }`}
               >
                 <span className="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-birthday-lavender/70 text-2xl shadow-sm">
                   ✉
@@ -106,6 +114,21 @@ export default function MailboxPage() {
           placeholder="可以在这里写下回复，内容会保存在当前浏览器里。"
         />
         {savedText ? <p className="saved-stamp mt-3 text-sm font-bold text-birthday-muted">{savedText}</p> : null}
+      </Modal>
+
+      <Modal
+        open={birthdayPromptOpen}
+        title="生日信"
+        onClose={() => setBirthdayPromptOpen(false)}
+        actions={
+          <button type="button" onClick={() => setBirthdayPromptOpen(false)} className="btn btn-soft">
+            关闭
+          </button>
+        }
+      >
+        <p className="py-3 text-center font-display text-2xl font-bold text-birthday-muted">
+          请仔细观察小屋，自由探索吧！
+        </p>
       </Modal>
     </section>
   );

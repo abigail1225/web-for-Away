@@ -221,7 +221,12 @@
     width: min(650px, 88vw);
     height: 400px;
     border: 0;
-    background: transparent;
+    border-radius: 30px;
+    background:
+      linear-gradient(32deg, transparent 49%, rgba(255,255,255,.42) 50%, transparent 51%),
+      linear-gradient(-32deg, transparent 49%, rgba(255,255,255,.32) 50%, transparent 51%),
+      radial-gradient(circle at 50% 42%, rgba(255,255,255,.48), transparent 32%),
+      linear-gradient(135deg, #efe1ff, #ceb0ff 72%);
     cursor: pointer;
     filter: drop-shadow(0 38px 54px rgba(88, 57, 116, .22));
     transform-origin: bottom;
@@ -1183,6 +1188,17 @@
   .mail-card {
     @apply min-h-44 rounded-lg border border-[#e9c87b]/60 bg-[#fffaf0]/[.72] p-5 shadow-soft transition hover:-translate-y-1 hover:bg-white/[.86];
     border-left: 6px solid rgba(217, 194, 255, .92);
+  }
+
+  .mail-card.mail-card-birthday {
+    border-color: rgba(150, 112, 205, .6);
+    border-left-color: rgba(126, 84, 185, .9);
+    background: linear-gradient(145deg, rgba(232, 216, 255, .94), rgba(210, 184, 244, .86));
+    box-shadow: 0 18px 42px rgba(102, 67, 153, .2);
+  }
+
+  .mail-card.mail-card-birthday:hover {
+    background: linear-gradient(145deg, rgba(239, 226, 255, .98), rgba(218, 194, 249, .92));
   }
 
   .memory-map-page {
@@ -2469,17 +2485,17 @@
   }
 
   .confetti-burst {
-    position: absolute;
-    right: 86px;
-    top: 44%;
-    z-index: 14;
-    width: 1px;
-    height: 1px;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
     pointer-events: none;
+    overflow: hidden;
   }
 
   .confetti-burst span {
     position: absolute;
+    left: var(--confetti-left);
+    top: var(--confetti-top);
     width: var(--confetti-width);
     height: var(--confetti-height);
     border-radius: 3px;
@@ -4938,11 +4954,6 @@
     transform: translateY(-50%) rotate(-8deg) scale(.9);
   }
 
-  .confetti-burst {
-    right: 76px;
-    top: 58%;
-  }
-
   .wall-window {
     right: 48px;
     width: 154px;
@@ -5092,11 +5103,6 @@
 
   .party-popper-label {
     font-size: 11px;
-  }
-
-  .confetti-burst {
-    right: 58px;
-    top: 68%;
   }
 
   .wall-window {
@@ -5490,14 +5496,17 @@
 @keyframes confettiShoot {
   0% {
     opacity: 0;
-    transform: translate(0, 0) rotate(0deg) scale(.55);
+    transform: translate3d(0, -8vh, 0) rotate(0deg) scale(.55);
   }
-  18% {
+  12% {
     opacity: 1;
+  }
+  72% {
+    opacity: .95;
   }
   100% {
     opacity: 0;
-    transform: translate(calc(var(--confetti-x) * -1), var(--confetti-y)) rotate(var(--confetti-rot)) scale(1);
+    transform: translate3d(var(--confetti-drift), var(--confetti-fall), 0) rotate(var(--confetti-rot)) scale(1);
   }
 }
 

@@ -48,6 +48,11 @@ export const gameLevels = [
 export const futureGameTypes = ['sliding-block', 'jigsaw', 'hidden-object'];
 
 const photoNotes = {
+  'cloud-1':
+    '寒假你回家的时候我们还没有合照，春节假期的时候用豆包疯狂生成合照，没想到这个小笨蛋还挺智能的，而且后来真的去到了和AI照片很像的地方。',
+  'cloud-2': '异地好伴侣，游戏四大金刚。第五人格你没有被邀请！',
+  'cloud-3': '帮我认真回信的某人。好萌吧。每次看到都哈特暖暖。像高中生一样地谈恋爱吧！',
+  'cloud-4': '背着我偷偷去结婚了。某人。',
   'us-1':
     '其实你真的教会了我很多。我以前真的就是一个随意使用豆包deepseek的小女孩（实则连ds都懒得碰，主打一个能用就行，大不了就自己改）。因为有你在，我一点点学会了用Tare，再到Gemini，再到ChatGPT、Codex，真的很感谢有你教我，让我勇闯vibe coding赛道（当然，话是这么说，其实也算不上vibe coding就是了）。但是你的钻研和探索真的有很深地改变我，也让我看到了更大的世界。谢谢你！',
   'us-2':
@@ -72,6 +77,11 @@ const photoNotes = {
     '混入卡林卡！然后出神图了。虽然在卡林卡舞台上全程对不上口型背不下来词，排练也真的很累很累很累但是因为和你在一起整体来说还是一份很美好的回忆。xwh打扮一番真的好帅嘿嘿嘿。每次专场看到白衬衫xwh我都流口水。',
   'sing-4':
     '2026专场！今年跟合唱团的缘分终于也告一段落了。真的很感动吧其实在台上也是忍不住掉小珍珠了。无论过程中有多少麻烦崩溃难受但是其实我还是很爱这帮人的。当然尤其是你。谢谢音乐和合唱让我遇见你，我是全天下最幸运的小女孩。',
+  'weird-1': 'xwh忍不住化身LGBTQ宣传大使在新主楼大行其道。Love is love！',
+  'weird-2':
+    '一百年内无人看懂。实际上一百年内无人能看懂的照片实在太多了。我已经不知道如何选择。那我们选择一张经典的、北航拳照片来展现学校主权吧！',
+  'weird-3': '留下一张图并什么都不说。',
+  'weird-4': '其实下午好是个小嘉豪，有人懂吗？',
   'moment-1':
     '我们第一次一起看雪～本来寒假还在说等明年冬天一定要和你一起看雪。没想到春天居然下雪了，下得还蛮大。很萌的两个人吧在雪地里一起走了很久然后跑到教学楼里玩盗版游戏......也是在朋友圈发布的我们的第一张合照嘻嘻嘻。',
   'moment-2':
@@ -88,10 +98,10 @@ export const photoCategories = [
     label: '1️⃣云上的日子',
     folder: 'public/photos/cloud-days/',
     photos: [
-      { src: 'photos/cloud-days/cloud-1.jpg', caption: '云上的日子 01' },
-      { src: 'photos/cloud-days/cloud-2.jpg', caption: '云上的日子 02' },
-      { src: 'photos/cloud-days/cloud-3.jpg', caption: '云上的日子 03' },
-      { src: 'photos/cloud-days/cloud-4.jpg', caption: '云上的日子 04' },
+      { src: 'photos/cloud-days/cloud-1.jpg', caption: '云上的日子 01', note: photoNotes['cloud-1'] },
+      { src: 'photos/cloud-days/cloud-2.jpg', caption: '云上的日子 02', note: photoNotes['cloud-2'] },
+      { src: 'photos/cloud-days/cloud-3.jpg', caption: '云上的日子 03', note: photoNotes['cloud-3'] },
+      { src: 'photos/cloud-days/cloud-4.jpg', caption: '云上的日子 04', note: photoNotes['cloud-4'] },
     ],
   },
   {
@@ -132,10 +142,10 @@ export const photoCategories = [
     label: '5️⃣奇奇怪怪的我们',
     folder: 'public/photos/weird/',
     photos: [
-      { src: 'photos/weird/weird-1.jpg', caption: '奇奇怪怪 01' },
-      { src: 'photos/weird/weird-2.jpg', caption: '奇奇怪怪 02' },
-      { src: 'photos/weird/weird-3.jpg', caption: '奇奇怪怪 03' },
-      { src: 'photos/weird/weird-4.jpg', caption: '奇奇怪怪 04' },
+      { src: 'photos/weird/weird-1.jpg', caption: '奇奇怪怪 01', note: photoNotes['weird-1'] },
+      { src: 'photos/weird/weird-2.jpg', caption: '奇奇怪怪 02', note: photoNotes['weird-2'] },
+      { src: 'photos/weird/weird-3.jpg', caption: '奇奇怪怪 03', note: photoNotes['weird-3'] },
+      { src: 'photos/weird/weird-4.jpg', caption: '奇奇怪怪 04', note: photoNotes['weird-4'] },
     ],
   },
   {
@@ -154,21 +164,86 @@ export const photoCategories = [
 export const letters = [
   {
     id: 'letter-001',
-    date: '2025.01.01',
-    title: '第一封信',
-    body: '这里放第一封信的正文。可以写某一天的心情、一次约会、一个想感谢他的瞬间。',
+    date: '2026.1.30',
+    title: '安心是被认真地爱着',
+    body: `在你一起的时候，总是很安心
+安心在于，有一种很强烈的感觉告诉我
+我正在被很认真很用心的对待
+这种感觉也许来源于
+即便是我随口问的问题你都很认真的回答我
+也许来源于
+你的每条语音里我想得到的你的表情
+所以我好安心
+也总是好苦恼
+该怎样把这种爱和安心
+回报给这样好的你`,
   },
   {
     id: 'letter-002',
-    date: '2025.03.14',
-    title: '给你的温柔存档',
-    body: '这里放第二封信的正文。适合写一些平时不好意思说出口的话。',
+    date: '2026.3.24',
+    title: '踏着夜色，一路笑回去',
+    body: `我想我会永远记得
+我们急急忙忙拿着电脑从图书馆跑到新主楼
+配置软件
+调试终端
+看代码
+因为jieba的配置包大笑
+你问我各种问题
+我看着路线图回答不出来
+看你调试代码
+喂你喝红豆薏米水 吃猪肉铺
+直到电脑没电
+累的不行
+一遍遍确认符号
+公式
+数据包有没有下错
+记录好问题
+踏着夜色回去
+一路走一路笑
+像喝醉了一样
+好幸福。`,
   },
   {
     id: 'letter-003',
-    date: '2025.05.20',
-    title: '今天也很喜欢你',
-    body: '这里放第三封信的正文。可以记录一个关于“我们”的小片段。',
+    date: '2026.5.12',
+    title: '和你同频的那一刻',
+    body: `徐炜航送我回宿舍。
+我坐在电动车的后座
+他轻轻哼着歌
+我不知道是什么 反正不是中文的
+有点像英语歌 可词他也记不清
+隐隐地我只听到一些简单的曲调
+我抱着他
+能感觉到他轻轻震动的胸膛
+
+我们刚在美食园吃完饭
+从如何吵架聊起
+聊到一些法吉他张什么的烂梗
+笑个不停
+突然有些认真了
+我说起和他在一起后
+很多我以为看到别人做会很尴尬的事情
+因为是他反而觉得自然而可爱
+我们都有些认真了起来
+爱是让人做自己
+至少是做更好的自己
+不是对人可爱的那部分的压抑
+我想
+
+北京刚下过雨
+风很凉
+坐在后座
+我的胸膛随他轻轻震动
+我哭了
+
+那一刻我感到爱情
+我感到一种
+切身的共鸣
+就像灵魂的震动
+和胸膛的频率一致
+我想
+如果我有全世界最深的悲伤
+也只需要一个很长的拥抱`,
   },
   {
     id: 'letter-birthday',

@@ -41,6 +41,27 @@ export default function MemoryMapPage({ activeCueId, roomLighting, onToggleLight
     confettiBurst: 0,
   });
   const { lightsOff = false, showBirthdayMoment = false } = roomLighting || {};
+  const confettiLayer = showBirthdayMoment && birthdayMoment.confettiBurst > 0 ? (
+    <div key={birthdayMoment.confettiBurst} className="confetti-burst" aria-hidden="true">
+      {confettiPieces.map((piece, index) => (
+        <span
+          key={`${piece.delay}-${piece.rot}-${index}`}
+          style={{
+            '--confetti-delay': piece.delay,
+            '--confetti-rot': piece.rot,
+            '--confetti-left': piece.left,
+            '--confetti-top': piece.top,
+            '--confetti-drift': piece.drift,
+            '--confetti-fall': piece.fall,
+            '--confetti-width': piece.w,
+            '--confetti-height': piece.h,
+            '--confetti-duration': piece.duration,
+            '--confetti-color': birthdayConfettiColors[index % birthdayConfettiColors.length],
+          }}
+        />
+      ))}
+    </div>
+  ) : null;
 
   return (
     <main className="memory-map-page">
@@ -109,26 +130,6 @@ export default function MemoryMapPage({ activeCueId, roomLighting, onToggleLight
                 <span className="party-popper-body" />
                 <span className="party-popper-label">吹一下</span>
               </button>
-
-              {birthdayMoment.confettiBurst > 0 ? (
-                <div key={birthdayMoment.confettiBurst} className="confetti-burst" aria-hidden="true">
-                  {confettiPieces.map((piece, index) => (
-                    <span
-                      key={`${piece.delay}-${piece.rot}-${index}`}
-                      style={{
-                        '--confetti-delay': piece.delay,
-                        '--confetti-rot': piece.rot,
-                        '--confetti-x': piece.x,
-                        '--confetti-y': piece.y,
-                        '--confetti-width': piece.w,
-                        '--confetti-height': piece.h,
-                        '--confetti-duration': piece.duration,
-                        '--confetti-color': birthdayConfettiColors[index % birthdayConfettiColors.length],
-                      }}
-                    />
-                  ))}
-                </div>
-              ) : null}
             </div>
           ) : null}
 
@@ -152,6 +153,7 @@ export default function MemoryMapPage({ activeCueId, roomLighting, onToggleLight
           ))}
         </div>
       </section>
+      {confettiLayer}
     </main>
   );
 }

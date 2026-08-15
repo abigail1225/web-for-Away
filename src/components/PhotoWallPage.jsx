@@ -79,11 +79,6 @@ export default function PhotoWallPage() {
           ))}
         </div>
 
-        <div className="mb-5 rounded-3xl border border-white/80 bg-white/[.55] px-5 py-4 text-sm leading-7 text-birthday-muted shadow-sm">
-          当前分类：<strong className="text-birthday-ink">{activeCategory.label}</strong>。替换路径：
-          <code className="ml-1 rounded bg-white/75 px-2 py-1">{activeCategory.folder}</code>
-        </div>
-
         <div key={activeCategory.id} className="photo-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {activeCategory.photos.map((photo, index) => (
             <PhotoCard key={photo.src} photo={photo} index={index} onOpen={openPhoto} />

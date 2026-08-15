@@ -15,12 +15,14 @@ describe('birthday cake moment', () => {
     });
   });
 
-  it('uses a denser confetti burst than the first pass', () => {
+  it('fills the viewport with a dense confetti burst', () => {
     const confetti = createBirthdayConfettiPieces();
 
-    assert.equal(confetti.length, 42);
+    assert.equal(confetti.length, 120);
     assert.ok(confetti.every((piece) => piece.delay.endsWith('ms')));
-    assert.ok(confetti.every((piece) => piece.x.endsWith('px')));
-    assert.ok(confetti.every((piece) => piece.y.endsWith('px')));
+    assert.ok(confetti.every((piece) => piece.left.endsWith('vw')));
+    assert.ok(confetti.every((piece) => piece.top.endsWith('vh')));
+    assert.ok(confetti.every((piece) => piece.drift.endsWith('px')));
+    assert.ok(confetti.every((piece) => piece.fall.endsWith('vh')));
   });
 });
