@@ -1,3 +1,12 @@
+import { useState } from 'react';
+import {
+  birthdayConfettiColors,
+  blowBirthdayCandle,
+  createBirthdayConfettiPieces,
+} from '../birthdayMoment.js';
+
+const confettiPieces = createBirthdayConfettiPieces();
+
 const rooms = [
   {
     id: 'tarot',
@@ -11,7 +20,7 @@ const rooms = [
   },
   {
     id: 'puzzle',
-    label: '礼物柜：小游戏与现实礼物交互',
+    label: '谜题桌：小游戏与隐藏线索',
     className: 'wall-cabinet',
   },
   {
@@ -26,7 +35,34 @@ const rooms = [
   },
 ];
 
-export default function MemoryMapPage({ activeCueId, onEnterRoom, onBackToOpening }) {
+export default function MemoryMapPage({ activeCueId, roomLighting, onToggleLights, onEnterRoom, onBackToOpening }) {
+  const [birthdayMoment, setBirthdayMoment] = useState({
+    candleBlownOut: false,
+    confettiBurst: 0,
+  });
+  const { lightsOff = false, showBirthdayMoment = false } = roomLighting || {};
+  const confettiLayer = showBirthdayMoment && birthdayMoment.confettiBurst > 0 ? (
+    <div key={birthdayMoment.confettiBurst} className="confetti-burst" aria-hidden="true">
+      {confettiPieces.map((piece, index) => (
+        <span
+          key={`${piece.delay}-${piece.rot}-${index}`}
+          style={{
+            '--confetti-delay': piece.delay,
+            '--confetti-rot': piece.rot,
+            '--confetti-left': piece.left,
+            '--confetti-top': piece.top,
+            '--confetti-drift': piece.drift,
+            '--confetti-fall': piece.fall,
+            '--confetti-width': piece.w,
+            '--confetti-height': piece.h,
+            '--confetti-duration': piece.duration,
+            '--confetti-color': birthdayConfettiColors[index % birthdayConfettiColors.length],
+          }}
+        />
+      ))}
+    </div>
+  ) : null;
+
   return (
     <main className="memory-map-page">
       <section className="memory-map-hero">
@@ -43,7 +79,16 @@ export default function MemoryMapPage({ activeCueId, onEnterRoom, onBackToOpenin
       </section>
 
       <section className="wall-room-wrap" aria-label="生日小屋墙面">
-        <div className="wall-room">
+        <div className={`wall-room ${lightsOff ? 'is-lights-off' : ''}`}>
+          <button
+            type="button"
+            className="room-light-switch"
+            aria-pressed={lightsOff}
+            onClick={onToggleLights}
+          >
+            {lightsOff ? '开灯' : '关灯'}
+          </button>
+          <span className="room-night-overlay" aria-hidden="true" />
           <span className="wall-trim trim-top" />
           <span className="wall-trim trim-bottom" />
           <span className="wall-window" />
@@ -58,6 +103,35 @@ export default function MemoryMapPage({ activeCueId, onEnterRoom, onBackToOpenin
             aria-hidden="true"
           />
           <span className="wall-decor decor-moon-note" aria-hidden="true" />
+
+          {showBirthdayMoment ? (
+            <div className="birthday-night-moment" aria-label="生日蛋糕和礼花">
+              <div
+                className={`birthday-cake ${birthdayMoment.candleBlownOut ? 'is-blown-out' : ''}`}
+                aria-hidden="true"
+              >
+                <span className="cake-plate" />
+                <span className="cake-layer cake-bottom" />
+                <span className="cake-layer cake-top" />
+                <span className="cake-cream" />
+                <span className="number-candle candle-two">2</span>
+                <span className="number-candle candle-three">3</span>
+                <span className="candle-wick" />
+                <span className="candle-smoke" />
+                <span className="candle-flame" />
+              </div>
+
+              <button
+                type="button"
+                className="party-popper"
+                aria-label="吹蜡烛并发射彩带"
+                onClick={() => setBirthdayMoment((current) => blowBirthdayCandle(current))}
+              >
+                <span className="party-popper-body" />
+                <span className="party-popper-label">吹一下</span>
+              </button>
+            </div>
+          ) : null}
 
           {rooms.map((room, index) => (
             <button
@@ -79,6 +153,7 @@ export default function MemoryMapPage({ activeCueId, onEnterRoom, onBackToOpenin
           ))}
         </div>
       </section>
+      {confettiLayer}
     </main>
   );
 }

@@ -58,7 +58,7 @@ export default function BouquetRotationPuzzle({
         <div
           className="bouquet-puzzle-grid"
           role="group"
-          aria-label="3乘3生日花束旋转拼图"
+        aria-label="3乘3花束旋转拼图"
         >
           {rotations.map((rotation, index) => {
             const row = Math.floor(index / GRID_SIZE);

@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { crosswordData } from '../data/crosswordData.js';
 import { assetPath, gameLevels } from '../data/siteData.js';
 import BouquetRotationPuzzle from './BouquetRotationPuzzle.jsx';
+import CrosswordPuzzle from './CrosswordPuzzle.jsx';
 import Modal from './Modal.jsx';
+import JourneyAheadGame from './puzzle/chapter3/JourneyAheadGame.jsx';
 import SectionTitle from './SectionTitle.jsx';
 
 const storageKey = 'birthday-puzzle-solved';
@@ -66,7 +69,7 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
     <section id="games" className="section-shell">
       <div className="section-container">
         <SectionTitle eyebrow="SECRET LEVEL" title="Puzzle Time">
-          通过一点点默契，兑换现实里的小礼物。关卡内容都在数组里，后续可以轻松替换。
+          解开一点点默契，顺着线索继续往前。
         </SectionTitle>
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)]">
@@ -105,6 +108,14 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
                   onAdvance={goNext}
                 />
               </div>
+            ) : level.kind === 'crossword' ? (
+              <div className="mt-6">
+                <CrosswordPuzzle data={crosswordData} onSolved={markCurrentLevelSolved} onAdvance={goNext} />
+              </div>
+            ) : level.kind === 'journey-ahead' ? (
+              <div className="mt-6">
+                <JourneyAheadGame onSolved={markCurrentLevelSolved} onAdvance={goNext} />
+              </div>
             ) : (
               <form onSubmit={submitAnswer} className="mt-6 space-y-4">
                 <label className="block text-sm font-black text-birthday-ink" htmlFor="puzzle-answer">
@@ -128,9 +139,9 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
           </article>
 
           <aside className="rounded-[28px] border border-white/80 bg-white/60 p-5 shadow-soft md:p-7">
-            <h3 className="font-display text-2xl font-bold text-[#7a4324]">礼物进度</h3>
+            <h3 className="font-display text-2xl font-bold text-[#7a4324]">解谜进度</h3>
             <p className="mt-2 text-sm leading-7 text-birthday-muted">
-              已解锁 {solvedCount} / {gameLevels.length}。保持一点神秘感，真正的礼物说明会在答对后出现。
+              完成 {solvedCount} / {gameLevels.length} 道谜题。下一道线索会在破解后出现。
             </p>
             <div className="mt-5 space-y-3">
               {gameLevels.map((item, index) => (
@@ -165,7 +176,7 @@ export default function GamePage({ onFinish, finishLabel = '去照片墙' }) {
           </button>
         }
       >
-        <p className="leading-8 text-birthday-muted">{level.gift}</p>
+        <p className="leading-8 text-birthday-muted">{level.reveal}</p>
       </Modal>
     </section>
   );

@@ -34,7 +34,7 @@ describe('BouquetRotationPuzzle', () => {
     const root = document.querySelector('.bouquet-puzzle');
     const status = screen.getByText('继续旋转拼好花束');
     const frame = root?.querySelector('.bouquet-puzzle-frame');
-    const board = screen.getByRole('group', { name: '3乘3生日花束旋转拼图' });
+    const board = screen.getByRole('group', { name: '3乘3花束旋转拼图' });
     const tileButtons = within(board).getAllByRole('button');
 
     expect(status.className).toBe('bouquet-puzzle-status');
