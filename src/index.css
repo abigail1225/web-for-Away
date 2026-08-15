@@ -2196,6 +2196,298 @@
       inset 0 1px 0 rgba(255,255,255,.5);
   }
 
+  .room-night-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 70%, rgba(255,226,122,.16), transparent 20%),
+      radial-gradient(circle at 77% 28%, rgba(184,220,255,.12), transparent 18%),
+      linear-gradient(180deg, rgba(35,25,54,.58), rgba(30,22,48,.72));
+    opacity: 0;
+    transition: opacity .5s ease;
+  }
+
+  .wall-room.is-lights-off .room-night-overlay {
+    opacity: 1;
+  }
+
+  .room-light-switch {
+    position: absolute;
+    right: 22px;
+    top: 18px;
+    z-index: 18;
+    border: 1px solid rgba(255,255,255,.78);
+    border-radius: 999px;
+    background: rgba(255,250,240,.86);
+    padding: 10px 18px;
+    color: #6a3f24;
+    font-size: 13px;
+    font-weight: 900;
+    box-shadow: 0 14px 30px rgba(95,58,32,.12);
+    cursor: pointer;
+    transition: transform .22s ease, background .22s ease, color .22s ease, box-shadow .22s ease;
+  }
+
+  .room-light-switch:hover,
+  .room-light-switch:focus-visible {
+    transform: translateY(-2px);
+    background: #fffaf0;
+    outline: 0;
+    box-shadow: 0 16px 34px rgba(95,58,32,.16), 0 0 0 4px rgba(255,226,122,.26);
+  }
+
+  .wall-room.is-lights-off .room-light-switch {
+    border-color: rgba(255,226,122,.56);
+    background: rgba(52,38,77,.86);
+    color: #fff4bd;
+    box-shadow: 0 14px 34px rgba(19,13,35,.28), 0 0 22px rgba(255,226,122,.2);
+  }
+
+  .birthday-night-moment {
+    position: absolute;
+    inset: 0;
+    z-index: 13;
+    pointer-events: none;
+  }
+
+  .birthday-cake {
+    position: absolute;
+    left: 50%;
+    bottom: 38px;
+    --cake-scale: 1;
+    width: 236px;
+    height: 178px;
+    transform: translateX(-50%) scale(var(--cake-scale));
+    transform-origin: bottom center;
+    filter: drop-shadow(0 26px 34px rgba(18, 10, 32, .42));
+    animation: birthdayCakeIn .62s cubic-bezier(.18,.84,.24,1) both;
+  }
+
+  .cake-plate,
+  .cake-layer,
+  .cake-cream,
+  .number-candle,
+  .candle-wick,
+  .candle-smoke,
+  .candle-flame {
+    position: absolute;
+    display: block;
+  }
+
+  .cake-plate {
+    left: 28px;
+    right: 28px;
+    bottom: 0;
+    height: 16px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255,255,255,.64), #fffaf0, rgba(255,255,255,.64));
+  }
+
+  .cake-layer {
+    left: 42px;
+    right: 42px;
+    border: 5px solid rgba(255,250,240,.72);
+    box-shadow: inset 0 -12px 0 rgba(242,109,125,.12);
+  }
+
+  .cake-bottom {
+    bottom: 14px;
+    height: 62px;
+    border-radius: 16px 16px 12px 12px;
+    background:
+      radial-gradient(circle at 18% 36%, rgba(255,255,255,.72) 0 5px, transparent 6px),
+      radial-gradient(circle at 50% 42%, rgba(255,255,255,.62) 0 5px, transparent 6px),
+      radial-gradient(circle at 82% 36%, rgba(255,255,255,.72) 0 5px, transparent 6px),
+      linear-gradient(135deg, #ffb2aa, #f26d7d);
+  }
+
+  .cake-top {
+    left: 62px;
+    right: 62px;
+    bottom: 72px;
+    height: 44px;
+    border-radius: 16px 16px 10px 10px;
+    background:
+      radial-gradient(circle at 30% 44%, rgba(255,255,255,.74) 0 4px, transparent 5px),
+      radial-gradient(circle at 70% 44%, rgba(255,255,255,.74) 0 4px, transparent 5px),
+      linear-gradient(135deg, #fff0b8, #ffd4e2);
+  }
+
+  .cake-cream {
+    left: 58px;
+    right: 58px;
+    bottom: 106px;
+    height: 18px;
+    border-radius: 999px 999px 12px 12px;
+    background: #fffaf0;
+  }
+
+  .cake-cream::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 10px;
+    width: 12px;
+    height: 14px;
+    border-radius: 0 0 999px 999px;
+    background: #fffaf0;
+    box-shadow:
+      46px 1px 0 -1px #fffaf0,
+      78px 0 0 -2px #fffaf0;
+  }
+
+  .number-candle {
+    bottom: 122px;
+    color: #fff4bd;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow:
+      0 0 10px rgba(255,226,122,.82),
+      0 4px 0 rgba(122,67,36,.28);
+  }
+
+  .candle-two {
+    left: 82px;
+    transform: rotate(-4deg);
+  }
+
+  .candle-three {
+    right: 78px;
+    transform: rotate(4deg);
+  }
+
+  .candle-flame {
+    left: 50%;
+    bottom: 174px;
+    width: 18px;
+    height: 26px;
+    transform: translateX(-50%);
+    border-radius: 999px 999px 999px 4px;
+    background: radial-gradient(circle at 50% 68%, #fff, #ffe27a 45%, #ff9f4a 72%);
+    box-shadow: 0 0 22px rgba(255,226,122,.9);
+    animation: candleFlicker .8s ease-in-out infinite alternate;
+  }
+
+  .candle-wick {
+    left: 50%;
+    bottom: 168px;
+    width: 4px;
+    height: 16px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #5f3a25;
+    opacity: 0;
+  }
+
+  .candle-smoke {
+    left: 50%;
+    bottom: 190px;
+    width: 22px;
+    height: 36px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    border-left: 3px solid rgba(255,250,240,.5);
+    border-top: 2px solid rgba(255,250,240,.25);
+    opacity: 0;
+  }
+
+  .birthday-cake.is-blown-out .candle-flame {
+    animation: candleBlowOut .34s ease-out both;
+  }
+
+  .birthday-cake.is-blown-out .candle-wick {
+    opacity: 1;
+  }
+
+  .birthday-cake.is-blown-out .candle-smoke {
+    animation: candleSmokeDrift 1.35s ease-out both;
+  }
+
+  .party-popper {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    z-index: 15;
+    display: grid;
+    width: 118px;
+    height: 164px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    pointer-events: auto;
+    cursor: pointer;
+    transform: translateY(-50%) rotate(-8deg);
+    filter: drop-shadow(0 18px 24px rgba(18,10,32,.3));
+  }
+
+  .party-popper:hover,
+  .party-popper:focus-visible {
+    outline: 0;
+    transform: translateY(-50%) rotate(-8deg) scale(1.04);
+  }
+
+  .party-popper-body {
+    position: absolute;
+    inset: 34px 28px 14px;
+    border-radius: 16px 16px 26px 26px;
+    background:
+      linear-gradient(90deg, transparent 0 42%, rgba(255,250,240,.9) 43% 56%, transparent 57%),
+      repeating-linear-gradient(135deg, #ff9f9f 0 14px, #ffe27a 14px 28px, #b8dcff 28px 42px, #d9c2ff 42px 56px);
+    clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%);
+    box-shadow: inset 0 0 0 5px rgba(255,255,255,.28);
+  }
+
+  .party-popper-body::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -24px;
+    width: 52px;
+    height: 32px;
+    transform: translateX(-50%);
+    border-radius: 50% 50% 12px 12px;
+    background: #fffaf0;
+    box-shadow: inset 0 -6px 0 rgba(255,212,226,.6);
+  }
+
+  .party-popper-label {
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: rgba(255,250,240,.92);
+    padding: 7px 11px;
+    color: #704018;
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .confetti-burst {
+    position: absolute;
+    right: 86px;
+    top: 44%;
+    z-index: 14;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+
+  .confetti-burst span {
+    position: absolute;
+    width: var(--confetti-width);
+    height: var(--confetti-height);
+    border-radius: 3px;
+    background: var(--confetti-color);
+    opacity: 0;
+    animation: confettiShoot var(--confetti-duration) cubic-bezier(.14,.78,.2,1) var(--confetti-delay) both;
+  }
+
   .wall-trim {
     position: absolute;
     left: 0;
@@ -4629,6 +4921,28 @@
     min-height: 820px;
   }
 
+  .birthday-cake {
+    bottom: 72px;
+    width: 210px;
+    --cake-scale: .9;
+  }
+
+  .party-popper {
+    right: 18px;
+    top: 62%;
+    transform: translateY(-50%) rotate(-8deg) scale(.86);
+  }
+
+  .party-popper:hover,
+  .party-popper:focus-visible {
+    transform: translateY(-50%) rotate(-8deg) scale(.9);
+  }
+
+  .confetti-burst {
+    right: 76px;
+    top: 58%;
+  }
+
   .wall-window {
     right: 48px;
     width: 154px;
@@ -4749,6 +5063,40 @@
 
   .wall-room {
     min-height: 980px;
+  }
+
+  .room-light-switch {
+    right: 14px;
+    top: 14px;
+    padding: 9px 14px;
+  }
+
+  .birthday-cake {
+    left: 44%;
+    bottom: 84px;
+    --cake-scale: .74;
+  }
+
+  .party-popper {
+    right: 8px;
+    top: 72%;
+    width: 94px;
+    height: 136px;
+    transform: translateY(-50%) rotate(-8deg) scale(.78);
+  }
+
+  .party-popper:hover,
+  .party-popper:focus-visible {
+    transform: translateY(-50%) rotate(-8deg) scale(.82);
+  }
+
+  .party-popper-label {
+    font-size: 11px;
+  }
+
+  .confetti-burst {
+    right: 58px;
+    top: 68%;
   }
 
   .wall-window {
@@ -5087,6 +5435,69 @@
   50% {
     opacity: 1;
     transform: scale(1.035);
+  }
+}
+
+@keyframes birthdayCakeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(22px) scale(var(--cake-scale));
+  }
+  72% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px) scale(var(--cake-scale));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(var(--cake-scale));
+  }
+}
+
+@keyframes candleFlicker {
+  0% {
+    transform: translateX(-50%) rotate(-5deg) scale(.92);
+  }
+  100% {
+    transform: translateX(-50%) rotate(5deg) scale(1.08);
+  }
+}
+
+@keyframes candleBlowOut {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) rotate(-4deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateX(14px) translateY(-8px) rotate(12deg) scale(.08);
+  }
+}
+
+@keyframes candleSmokeDrift {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px) scale(.55) rotate(-8deg);
+  }
+  18% {
+    opacity: .72;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateX(-14px) translateY(-34px) scale(1.2) rotate(18deg);
+  }
+}
+
+@keyframes confettiShoot {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg) scale(.55);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--confetti-x) * -1), var(--confetti-y)) rotate(var(--confetti-rot)) scale(1);
   }
 }
 

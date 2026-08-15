@@ -1,19 +1,18 @@
-import { useRef, useState } from 'react';
-import { assetPath, openingLetter } from '../data/siteData.js';
+import { useState } from 'react';
+import { openingLetter } from '../data/siteData.js';
 
 const floatingItems = ['✦', '✿', '★', '❀', '♡', '✧', '✦', '✿', '★', '♡'];
 
-export default function OpeningPage({ onEnter }) {
+export default function OpeningPage({ onEnter, onPlayBirthdaySong }) {
   const [opened, setOpened] = useState(false);
   const [audioHint, setAudioHint] = useState('');
-  const audioRef = useRef(null);
 
   const openLetter = async () => {
     setOpened(true);
     setAudioHint('');
 
     try {
-      await audioRef.current?.play();
+      await onPlayBirthdaySong?.();
     } catch {
       setAudioHint('如果没有听到歌，请确认 public/birthday-song.mp3 已放好，或再点一次按钮。');
     }
@@ -21,7 +20,6 @@ export default function OpeningPage({ onEnter }) {
 
   return (
     <main className="relative min-h-screen overflow-hidden px-5 py-7 text-birthday-ink">
-      <audio ref={audioRef} src={assetPath(openingLetter.audio)} preload="auto" />
       <div className="party-layer" aria-hidden="true">
         {floatingItems.map((item, index) => (
           <span

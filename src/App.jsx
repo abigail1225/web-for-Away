@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import GamePage from './components/GamePage.jsx';
 import HugButton from './components/HugButton.jsx';
 import MailboxPage from './components/MailboxPage.jsx';
@@ -6,9 +6,10 @@ import MemoryMapPage from './components/MemoryMapPage.jsx';
 import Modal from './components/Modal.jsx';
 import OpeningPage from './components/OpeningPage.jsx';
 import PhotoWallPage from './components/PhotoWallPage.jsx';
-import PreviewJumpPanel from './components/PreviewJumpPanel.jsx';
 import QuizGamePage from './components/QuizGamePage.jsx';
 import TarotPage from './components/TarotPage.jsx';
+import { assetPath, openingLetter } from './data/siteData.js';
+import { toggleRoomLights } from './roomLighting.js';
 import { getNextCueId, isMailboxUnlocked, markRoomExplored } from './roomProgress.js';
 
 function RoomShell({ children, onBackHome }) {
@@ -23,9 +24,15 @@ function RoomShell({ children, onBackHome }) {
 }
 
 export default function App() {
+  const birthdayAudioRef = useRef(null);
   const [stage, setStage] = useState('opening');
   const [exploredRooms, setExploredRooms] = useState([]);
   const [mailboxLocked, setMailboxLocked] = useState(false);
+  const [roomLighting, setRoomLighting] = useState({
+    birthdayMomentSeen: false,
+    lightsOff: false,
+    showBirthdayMoment: false,
+  });
   const mailboxUnlocked = isMailboxUnlocked(exploredRooms);
   const activeCueId = getNextCueId(exploredRooms);
 
@@ -42,11 +49,16 @@ export default function App() {
     setStage(nextStage);
   };
 
-  const previewPanel = <PreviewJumpPanel onStageChange={enterStage} />;
   const hugSurprise = stage !== 'opening' ? <HugButton showCount={stage === 'home'} /> : null;
   const goHome = () => {
     window.location.hash = '';
     setStage('home');
+  };
+  const playBirthdaySong = async () => {
+    await birthdayAudioRef.current?.play();
+  };
+  const toggleLights = () => {
+    setRoomLighting((current) => toggleRoomLights(current));
   };
 
   const lockedMailboxModal = (
@@ -66,105 +78,67 @@ export default function App() {
     </Modal>
   );
 
+  let stageContent;
+
   if (stage === 'opening') {
-    return (
-      <>
-        <OpeningPage onEnter={() => enterStage('home')} />
-        {previewPanel}
-        {lockedMailboxModal}
-      </>
+    stageContent = <OpeningPage onEnter={() => enterStage('home')} onPlayBirthdaySong={playBirthdaySong} />;
+  } else if (stage === 'home') {
+    stageContent = (
+      <MemoryMapPage
+        activeCueId={activeCueId}
+        roomLighting={roomLighting}
+        onToggleLights={toggleLights}
+        onEnterRoom={enterStage}
+        onBackToOpening={() => enterStage('opening')}
+      />
     );
-  }
-
-  if (stage === 'home') {
-    return (
-      <>
-        <MemoryMapPage
-          activeCueId={activeCueId}
-          onEnterRoom={enterStage}
-          onBackToOpening={() => enterStage('opening')}
-        />
-        {hugSurprise}
-        {previewPanel}
-        {lockedMailboxModal}
-      </>
+  } else if (stage === 'tarot') {
+    stageContent = (
+      <RoomShell onBackHome={goHome}>
+        <TarotPage onComplete={goHome} completeLabel="回到生日小屋" />
+      </RoomShell>
     );
-  }
-
-  if (stage === 'tarot') {
-    return (
-      <>
-        <RoomShell onBackHome={goHome}>
-          <TarotPage onComplete={goHome} completeLabel="回到生日小屋" />
-        </RoomShell>
-        {hugSurprise}
-        {previewPanel}
-        {lockedMailboxModal}
-      </>
+  } else if (stage === 'quiz') {
+    stageContent = (
+      <RoomShell onBackHome={goHome}>
+        <QuizGamePage onComplete={goHome} completeLabel="回到生日小屋" />
+      </RoomShell>
     );
-  }
-
-  if (stage === 'quiz') {
-    return (
-      <>
-        <RoomShell onBackHome={goHome}>
-          <QuizGamePage onComplete={goHome} completeLabel="回到生日小屋" />
-        </RoomShell>
-        {hugSurprise}
-        {previewPanel}
-        {lockedMailboxModal}
-      </>
+  } else if (stage === 'puzzle') {
+    stageContent = (
+      <RoomShell onBackHome={goHome}>
+        <GamePage onFinish={goHome} finishLabel="回到生日小屋" />
+      </RoomShell>
     );
-  }
-
-  if (stage === 'puzzle') {
-    return (
-      <>
-        <RoomShell onBackHome={goHome}>
-          <GamePage onFinish={goHome} finishLabel="回到生日小屋" />
-        </RoomShell>
-        {hugSurprise}
-        {previewPanel}
-        {lockedMailboxModal}
-      </>
+  } else if (stage === 'photos') {
+    stageContent = (
+      <RoomShell onBackHome={goHome}>
+        <PhotoWallPage />
+      </RoomShell>
     );
-  }
-
-  if (stage === 'photos') {
-    return (
-      <>
-        <RoomShell onBackHome={goHome}>
-          <PhotoWallPage />
-        </RoomShell>
-        {hugSurprise}
-        {previewPanel}
-        {lockedMailboxModal}
-      </>
+  } else if (stage === 'letters') {
+    stageContent = (
+      <RoomShell onBackHome={goHome}>
+        <MailboxPage />
+      </RoomShell>
     );
-  }
-
-  if (stage === 'letters') {
-    return (
-      <>
-        <RoomShell onBackHome={goHome}>
-          <MailboxPage />
-        </RoomShell>
-        {hugSurprise}
-        {previewPanel}
-        {lockedMailboxModal}
-      </>
+  } else {
+    stageContent = (
+      <MemoryMapPage
+        activeCueId={activeCueId}
+        roomLighting={roomLighting}
+        onToggleLights={toggleLights}
+        onEnterRoom={enterStage}
+        onBackToOpening={() => enterStage('opening')}
+      />
     );
   }
 
   return (
     <>
-      <MemoryMapPage
-        activeCueId={activeCueId}
-        onEnterRoom={enterStage}
-        onBackToOpening={() => enterStage('opening')}
-      />
+      <audio ref={birthdayAudioRef} src={assetPath(openingLetter.audio)} preload="auto" />
+      {stageContent}
       {hugSurprise}
-      {previewPanel}
       {lockedMailboxModal}
     </>
   );
